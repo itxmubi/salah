@@ -100,6 +100,10 @@ abstract class AppLocalizations {
   /// **'Salah'**
   String get appTitle;
 
+  /// No description provided for @hijriDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Hijri date'**
   String get hijriDate;
 
   /// No description provided for @navHome.
@@ -149,6 +153,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The Qibla compass will be available in a later phase.'**
   String get qiblaComingSoon;
+
+  /// No description provided for @qiblaLocationRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a location to calculate the direction to the Kaaba.'**
+  String get qiblaLocationRequired;
+
+  /// No description provided for @qiblaBearing.
+  ///
+  /// In en, this message translates to:
+  /// **'Bearing from north'**
+  String get qiblaBearing;
+
+  /// No description provided for @kaabaDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance to Kaaba'**
+  String get kaabaDistance;
+
+  /// No description provided for @compassUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Compass signal unavailable. The arrow shows the bearing from north.'**
+  String get compassUnavailable;
+
+  /// No description provided for @compassNorth.
+  ///
+  /// In en, this message translates to:
+  /// **'N'**
+  String get compassNorth;
+
+  /// No description provided for @compassEast.
+  ///
+  /// In en, this message translates to:
+  /// **'E'**
+  String get compassEast;
+
+  /// No description provided for @compassSouth.
+  ///
+  /// In en, this message translates to:
+  /// **'S'**
+  String get compassSouth;
+
+  /// No description provided for @compassWest.
+  ///
+  /// In en, this message translates to:
+  /// **'W'**
+  String get compassWest;
+
+  /// No description provided for @compassAlignHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn your device until the arrow points to the top of the compass.'**
+  String get compassAlignHint;
+
+  /// No description provided for @compassSearching.
+  ///
+  /// In en, this message translates to:
+  /// **'Looking for a compass signal…'**
+  String get compassSearching;
+
+  /// No description provided for @compassCalibrationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Calibrate your compass'**
+  String get compassCalibrationTitle;
+
+  /// No description provided for @compassCalibrationDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Move your phone in a figure-eight a few times, then keep it away from magnets, metal objects, and electronic equipment. Nearby interference and local magnetic variation can affect compass readings.'**
+  String get compassCalibrationDescription;
 
   /// No description provided for @notificationSettingsTitle.
   ///

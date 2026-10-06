@@ -7,6 +7,7 @@ import '../features/home/presentation/screens/home_screen.dart';
 import '../features/location/presentation/screens/location_screen.dart';
 import '../features/notifications/presentation/screens/notification_settings_screen.dart';
 import '../features/prayer/presentation/screens/prayer_times_screen.dart';
+import '../features/qibla/presentation/screens/qibla_screen.dart';
 import '../l10n/generated/app_localizations.dart';
 
 GoRouter createAppRouter() => GoRouter(
@@ -39,11 +40,7 @@ GoRouter createAppRouter() => GoRouter(
             GoRoute(
               path: '/quran',
               name: 'quran',
-              builder: (context, state) => const _ComingSoonScreen(
-                icon: AppIcons.quran,
-                titleKey: 'quranTitle',
-                descriptionKey: 'quranComingSoon',
-              ),
+              builder: (context, state) => const _ComingSoonScreen(),
             ),
           ],
         ),
@@ -52,11 +49,7 @@ GoRouter createAppRouter() => GoRouter(
             GoRoute(
               path: '/qibla',
               name: 'qibla',
-              builder: (context, state) => const _ComingSoonScreen(
-                icon: AppIcons.qibla,
-                titleKey: 'qiblaTitle',
-                descriptionKey: 'qiblaComingSoon',
-              ),
+              builder: (context, state) => const QiblaScreen(),
             ),
           ],
         ),
@@ -121,25 +114,13 @@ class _MainShell extends StatelessWidget {
 }
 
 class _ComingSoonScreen extends StatelessWidget {
-  const _ComingSoonScreen({
-    required this.icon,
-    required this.titleKey,
-    required this.descriptionKey,
-  });
-
-  final IconData icon;
-  final String titleKey;
-  final String descriptionKey;
+  const _ComingSoonScreen();
 
   @override
   Widget build(BuildContext context) {
     final strings = AppLocalizations.of(context);
-    final title = titleKey == 'quranTitle'
-        ? strings.quranTitle
-        : strings.qiblaTitle;
-    final description = descriptionKey == 'quranComingSoon'
-        ? strings.quranComingSoon
-        : strings.qiblaComingSoon;
+    final title = strings.quranTitle;
+    final description = strings.quranComingSoon;
     final colors = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(title: Text(title)),
@@ -157,7 +138,11 @@ class _ComingSoonScreen extends StatelessWidget {
                 child: SizedBox(
                   width: 88,
                   height: 88,
-                  child: Icon(icon, size: 40, color: colors.onPrimaryContainer),
+                  child: Icon(
+                    AppIcons.quran,
+                    size: 40,
+                    color: colors.onPrimaryContainer,
+                  ),
                 ),
               ),
               const SizedBox(height: 24),

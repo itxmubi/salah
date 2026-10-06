@@ -40,6 +40,46 @@ class AppLocalizationsEn extends AppLocalizations {
       'The Qibla compass will be available in a later phase.';
 
   @override
+  String get qiblaLocationRequired =>
+      'Choose a location to calculate the direction to the Kaaba.';
+
+  @override
+  String get qiblaBearing => 'Bearing from north';
+
+  @override
+  String get kaabaDistance => 'Distance to Kaaba';
+
+  @override
+  String get compassUnavailable =>
+      'Compass signal unavailable. The arrow shows the bearing from north.';
+
+  @override
+  String get compassNorth => 'N';
+
+  @override
+  String get compassEast => 'E';
+
+  @override
+  String get compassSouth => 'S';
+
+  @override
+  String get compassWest => 'W';
+
+  @override
+  String get compassAlignHint =>
+      'Turn your device until the arrow points to the top of the compass.';
+
+  @override
+  String get compassSearching => 'Looking for a compass signal…';
+
+  @override
+  String get compassCalibrationTitle => 'Calibrate your compass';
+
+  @override
+  String get compassCalibrationDescription =>
+      'Move your phone in a figure-eight a few times, then keep it away from magnets, metal objects, and electronic equipment. Nearby interference and local magnetic variation can affect compass readings.';
+
+  @override
   String get notificationSettingsTitle => 'Prayer alerts';
 
   @override
