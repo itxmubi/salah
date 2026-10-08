@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../core/theme/app_icons.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_icons.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';
 import '../../../../core/widgets/app_empty_state.dart';
@@ -29,7 +29,8 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen>
     with WidgetsBindingObserver {
   Timer? _ticker;
   DateTime _now = DateTime.now().toUtc();
-  bool _showMonth = false;
+  bool _showMonth = true;
+  bool _initialMonthRequested = false;
   bool _refreshing = false;
 
   @override
@@ -108,9 +109,25 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen>
             retryLabel: localization.retry,
             onRetry: _refresh,
           ),
-          data: (state) => state.overview == null
-              ? _noLocation(context, localization)
-              : _buildPrayerContent(context, localization, state),
+          data: (state) {
+            if (state.overview == null)
+              return _noLocation(context, localization);
+            if (_showMonth &&
+                !_initialMonthRequested &&
+                state.monthSchedules.isEmpty &&
+                !state.isLoadingMonth) {
+              _initialMonthRequested = true;
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (!mounted) return;
+                ref
+                    .read(prayerControllerProvider.notifier)
+                    .loadMonth(
+                      state.selectedMonth ?? state.overview!.today.localDate,
+                    );
+              });
+            }
+            return _buildPrayerContent(context, localization, state);
+          },
         ),
       ),
     );
@@ -158,12 +175,14 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen>
                     localization: localization,
                   ),
                 ),
-              _NextPrayerCard(
-                overview: overview,
-                now: _now,
-                localization: localization,
-              ),
-              const SizedBox(height: AppSpacing.lg),
+              if (!_showMonth) ...[
+                _NextPrayerCard(
+                  overview: overview,
+                  now: _now,
+                  localization: localization,
+                ),
+                const SizedBox(height: AppSpacing.lg),
+              ],
               _ScheduleTabs(
                 showMonth: _showMonth,
                 localization: localization,
@@ -298,6 +317,7 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen>
               padding: const EdgeInsets.only(bottom: AppSpacing.sm),
               child: _MonthDayCard(
                 schedule: schedule,
+                currentDate: state.overview!.today.localDate,
                 settings: state.settings,
                 localization: localization,
               ),
@@ -717,44 +737,82 @@ class _SunTime extends StatelessWidget {
 class _MonthDayCard extends StatelessWidget {
   const _MonthDayCard({
     required this.schedule,
+    required this.currentDate,
     required this.settings,
     required this.localization,
   });
 
   final PrayerSchedule schedule;
+  final DateTime currentDate;
   final PrayerSettings settings;
   final AppLocalizations localization;
 
   @override
   Widget build(BuildContext context) {
+    final isToday =
+        schedule.localDate.year == currentDate.year &&
+        schedule.localDate.month == currentDate.month &&
+        schedule.localDate.day == currentDate.day;
+    final colors = Theme.of(context).colorScheme;
     final date = DateFormat(
       'EEE, d',
       localization.localeName,
     ).format(schedule.localDate);
     final names = _PrayerLabels(localization);
-    return AppCard(
-      padding: AppSpacing.sm,
+    return Card(
+      color: isToday ? colors.primaryContainer : null,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: isToday
+            ? BorderSide(color: colors.primary, width: 1.5)
+            : BorderSide.none,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(
-              left: AppSpacing.xs,
-              bottom: AppSpacing.xs,
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.sm,
+              AppSpacing.sm,
+              AppSpacing.sm,
+              0,
             ),
-            child: Text(date, style: Theme.of(context).textTheme.titleMedium),
-          ),
-          Wrap(
-            spacing: AppSpacing.xs,
-            runSpacing: AppSpacing.xs,
-            children: [
-              for (final event in schedule.events)
-                _MonthTimeChip(
-                  label: names.of(event.prayer),
-                  event: event,
-                  settings: settings,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    date,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: isToday ? colors.primary : null,
+                      fontWeight: isToday ? FontWeight.bold : null,
+                    ),
+                  ),
                 ),
-            ],
+                if (isToday)
+                  Text(
+                    localization.todayLabel,
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: colors.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.sm),
+            child: Wrap(
+              spacing: AppSpacing.xs,
+              runSpacing: AppSpacing.xs,
+              children: [
+                for (final event in schedule.events)
+                  _MonthTimeChip(
+                    label: names.of(event.prayer),
+                    event: event,
+                    settings: settings,
+                  ),
+              ],
+            ),
           ),
         ],
       ),

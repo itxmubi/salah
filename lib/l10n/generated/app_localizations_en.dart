@@ -83,6 +83,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notificationSettingsTitle => 'Prayer alerts';
 
   @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsPrayerSection => 'Prayer and location';
+
+  @override
   String get prayerAlertsTitle => 'Prayer notifications';
 
   @override
@@ -359,6 +365,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get todaySchedule => 'Today’s schedule';
+
+  @override
+  String get todayLabel => 'Today';
 
   @override
   String get monthlySchedule => 'Monthly timetable';

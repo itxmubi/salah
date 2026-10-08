@@ -232,6 +232,18 @@ abstract class AppLocalizations {
   /// **'Prayer alerts'**
   String get notificationSettingsTitle;
 
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsPrayerSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer and location'**
+  String get settingsPrayerSection;
+
   /// No description provided for @prayerAlertsTitle.
   ///
   /// In en, this message translates to:
@@ -753,6 +765,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Today’s schedule'**
   String get todaySchedule;
+
+  /// No description provided for @todayLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get todayLabel;
 
   /// No description provided for @monthlySchedule.
   ///

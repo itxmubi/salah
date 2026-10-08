@@ -8,6 +8,7 @@ import '../features/location/presentation/screens/location_screen.dart';
 import '../features/notifications/presentation/screens/notification_settings_screen.dart';
 import '../features/prayer/presentation/screens/prayer_times_screen.dart';
 import '../features/qibla/presentation/screens/qibla_screen.dart';
+import '../features/settings/presentation/screens/settings_screen.dart';
 import '../l10n/generated/app_localizations.dart';
 
 GoRouter createAppRouter() => GoRouter(
@@ -38,18 +39,18 @@ GoRouter createAppRouter() => GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: '/quran',
-              name: 'quran',
-              builder: (context, state) => const _ComingSoonScreen(),
+              path: '/qibla',
+              name: 'qibla',
+              builder: (context, state) => const QiblaScreen(),
             ),
           ],
         ),
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: '/qibla',
-              name: 'qibla',
-              builder: (context, state) => const QiblaScreen(),
+              path: '/settings',
+              name: 'settings',
+              builder: (context, state) => const SettingsScreen(),
             ),
           ],
         ),
@@ -97,68 +98,18 @@ class _MainShell extends StatelessWidget {
             label: strings.navPrayer,
           ),
           NavigationDestination(
-            icon: const Icon(AppIcons.quran),
-            selectedIcon: const Icon(Icons.menu_book_rounded),
-            label: strings.navQuran,
-          ),
-          NavigationDestination(
             icon: const Icon(AppIcons.qibla),
             selectedIcon: const Icon(Icons.explore_rounded),
             label: strings.navQibla,
           ),
+          NavigationDestination(
+            icon: const Icon(AppIcons.settings),
+            selectedIcon: const Icon(Icons.settings_rounded),
+            label: strings.settingsTitle,
+          ),
         ],
       ),
       backgroundColor: colorScheme.surface,
-    );
-  }
-}
-
-class _ComingSoonScreen extends StatelessWidget {
-  const _ComingSoonScreen();
-
-  @override
-  Widget build(BuildContext context) {
-    final strings = AppLocalizations.of(context);
-    final title = strings.quranTitle;
-    final description = strings.quranComingSoon;
-    final colors = Theme.of(context).colorScheme;
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: colors.primaryContainer,
-                  borderRadius: BorderRadius.circular(28),
-                ),
-                child: SizedBox(
-                  width: 88,
-                  height: 88,
-                  child: Icon(
-                    AppIcons.quran,
-                    size: 40,
-                    color: colors.onPrimaryContainer,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 24),
-              Text(title, style: Theme.of(context).textTheme.headlineSmall),
-              const SizedBox(height: 8),
-              Text(
-                description,
-                textAlign: TextAlign.center,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyLarge?.copyWith(color: colors.onSurfaceVariant),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

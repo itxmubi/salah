@@ -12,7 +12,6 @@ import '../../../../core/widgets/app_card.dart';
 import '../../../../core/widgets/app_empty_state.dart';
 import '../../../../core/widgets/app_error_state.dart';
 import '../../../../core/widgets/app_loading_state.dart';
-import '../../../../core/widgets/theme_settings_dialog.dart';
 import '../../../../features/calendar/presentation/providers/hijri_calendar_providers.dart';
 import '../../../../features/prayer/domain/entities/prayer_schedule.dart';
 import '../../../../features/prayer/domain/entities/prayer_issue.dart';
@@ -96,12 +95,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             icon: const Icon(AppIcons.location),
           ),
           IconButton(
-            tooltip: strings.appearanceTitle,
-            onPressed: () => showDialog<void>(
-              context: context,
-              builder: (context) => const ThemeSettingsDialog(),
-            ),
-            icon: const Icon(AppIcons.palette),
+            tooltip: strings.settingsTitle,
+            onPressed: () => context.push('/settings'),
+            icon: const Icon(AppIcons.settings),
           ),
           const SizedBox(width: AppSpacing.xs),
         ],

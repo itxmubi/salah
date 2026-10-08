@@ -1,6 +1,17 @@
 # Salah
 
-A Flutter application foundation for prayer times, Quran reading, Qibla, and related Islamic utilities.
+Salah is a Flutter app for local prayer times, Qibla direction, and related Islamic utilities. It currently targets Android and iOS.
+
+## Features
+
+- **Home:** Daily prayer overview, next-prayer countdown, sunrise and sunset, and Hijri date when the calendar service is available.
+- **Prayer:** Daily and monthly timetables, with the current local date highlighted. Prayer calculations support multiple methods, Standard or Hanafi Asr, event time adjustments, and 12- or 24-hour display.
+- **Location:** Use the device location or search for a city; save places locally to switch between them.
+- **Qibla:** Kaaba bearing and distance, with a live compass when the device has a heading sensor and a bearing-only fallback otherwise.
+- **Settings:** Shortcuts to prayer, location, prayer alert, and appearance controls. Theme mode and accent color are saved on the device.
+- **Prayer alerts:** Choose which prayers may send alerts. Alert scheduling and Azan audio are not implemented yet.
+
+The Quran tab and Quran reading features are not currently included. Quran, translation, and recitation content will require an appropriate source and license before integration.
 
 ## Getting started
 
@@ -11,7 +22,7 @@ flutter pub get
 flutter run
 ```
 
-Run static analysis with `flutter analyze`. Run the project test suite with `flutter test`.
+Run static analysis with `flutter analyze` and the project tests with `flutter test`.
 
 ## Localization
 
@@ -19,22 +30,14 @@ English strings are in `lib/l10n/arb/app_en.arb`. After editing ARB files or add
 
 ## Architecture
 
-The app uses a feature-first Clean Architecture layout. Each feature can contain `data`, `domain`, and `presentation` layers under `lib/features/<feature>/`. Shared functionality belongs in `lib/core/`. Domain repository contracts and use cases should not depend on Flutter widgets, APIs, or storage packages.
+The app uses a feature-first Clean Architecture layout. Features live under `lib/features/<feature>/` and can contain `data`, `domain`, and `presentation` layers. Shared functionality belongs in `lib/core/`.
 
-Riverpod is used for state and dependency wiring. GoRouter owns application routes. App-wide dependencies should be exposed as providers and injected into feature providers; avoid a second service locator.
+Riverpod handles state and dependency wiring. GoRouter owns the four-tab navigation shell (Home, Prayer, Qibla, Settings) and the supporting Location and Prayer Alerts routes.
 
 ```text
 lib/
   app/       app root and routing
-  core/      shared error, theme, utilities, widgets, and services
-  features/  independent feature-first modules
+  core/      shared errors, theme, utilities, widgets, and services
+  features/  calendar, home, location, notifications, prayer, qibla, settings
+  l10n/      English source strings and generated localization classes
 ```
-
-## Platform setup
-
-Android and iOS are the initial mobile targets. Platform-specific permissions and minimum OS versions should be added alongside the feature that needs them and documented before release. Do not add external religious content until its source and licensing are confirmed; see [salah_docs.md](salah_docs.md).
-
-## Project plan
-
-See [salah_docs.md](salah_docs.md) for architecture, product scope, technical decisions, and phased delivery status.
-For a concise snapshot of current decisions and the next steps, see [PROJECT_MEMORY.md](PROJECT_MEMORY.md).
