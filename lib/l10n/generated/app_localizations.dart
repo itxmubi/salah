@@ -142,6 +142,114 @@ abstract class AppLocalizations {
   /// **'Your Quran reading space is being prepared.'**
   String get quranComingSoon;
 
+  /// No description provided for @quranLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading Quran content'**
+  String get quranLoading;
+
+  /// No description provided for @quranLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Quran content could not be loaded. Check your connection and try again.'**
+  String get quranLoadError;
+
+  /// No description provided for @quranLibraryHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Read the Quran'**
+  String get quranLibraryHeading;
+
+  /// No description provided for @quranLibraryDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse the surahs and open a chapter to read its Arabic text.'**
+  String get quranLibraryDescription;
+
+  /// No description provided for @quranSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search surah name or number'**
+  String get quranSearchHint;
+
+  /// No description provided for @clearSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get clearSearch;
+
+  /// No description provided for @quranSurahCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} surahs'**
+  String quranSurahCount(int count);
+
+  /// No description provided for @quranNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No surahs match your search.'**
+  String get quranNoResults;
+
+  /// No description provided for @quranAyahs.
+  ///
+  /// In en, this message translates to:
+  /// **'ayahs'**
+  String get quranAyahs;
+
+  /// No description provided for @quranReadingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quran reading'**
+  String get quranReadingTitle;
+
+  /// No description provided for @quranPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Page'**
+  String get quranPage;
+
+  /// No description provided for @quranBySurah.
+  ///
+  /// In en, this message translates to:
+  /// **'Quran by Surah'**
+  String get quranBySurah;
+
+  /// No description provided for @quranByJuz.
+  ///
+  /// In en, this message translates to:
+  /// **'Quran by Juz'**
+  String get quranByJuz;
+
+  /// No description provided for @quranFull.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Quran'**
+  String get quranFull;
+
+  /// No description provided for @quranJuzNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Juz {number}'**
+  String quranJuzNumber(int number);
+
+  /// No description provided for @quranPageCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {page} of {total}'**
+  String quranPageCount(int page, int total);
+
+  /// No description provided for @previousPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous page'**
+  String get previousPage;
+
+  /// No description provided for @nextPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Next page'**
+  String get nextPage;
+
   /// No description provided for @qiblaTitle.
   ///
   /// In en, this message translates to:

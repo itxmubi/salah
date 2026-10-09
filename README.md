@@ -9,9 +9,8 @@ Salah is a Flutter app for local prayer times, Qibla direction, and related Isla
 - **Location:** Use the device location or search for a city; save places locally to switch between them.
 - **Qibla:** Kaaba bearing and distance, with a live compass when the device has a heading sensor and a bearing-only fallback otherwise.
 - **Settings:** Shortcuts to prayer, location, prayer alert, and appearance controls. Theme mode and accent color are saved on the device.
+- **Quran:** Read by Surah or Juz, or browse the full Quran in 604 API-numbered Mushaf pages with previous/next navigation. Arabic Uthmani text loads online. Translation, recitation, offline reading, and licensing review remain outstanding.
 - **Prayer alerts:** Choose which prayers may send alerts. Alert scheduling and Azan audio are not implemented yet.
-
-The Quran tab and Quran reading features are not currently included. Quran, translation, and recitation content will require an appropriate source and license before integration.
 
 ## Getting started
 
@@ -32,7 +31,7 @@ English strings are in `lib/l10n/arb/app_en.arb`. After editing ARB files or add
 
 The app uses a feature-first Clean Architecture layout. Features live under `lib/features/<feature>/` and can contain `data`, `domain`, and `presentation` layers. Shared functionality belongs in `lib/core/`.
 
-Riverpod handles state and dependency wiring. GoRouter owns the four-tab navigation shell (Home, Prayer, Qibla, Settings) and the supporting Location and Prayer Alerts routes.
+Riverpod handles state and dependency wiring. GoRouter owns the five-tab navigation shell (Home, Prayer, Quran, Qibla, Settings) and the supporting Location and Prayer Alerts routes.
 
 ```text
 lib/

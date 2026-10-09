@@ -33,6 +33,68 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quranComingSoon => 'Your Quran reading space is being prepared.';
 
   @override
+  String get quranLoading => 'Loading Quran content';
+
+  @override
+  String get quranLoadError =>
+      'Quran content could not be loaded. Check your connection and try again.';
+
+  @override
+  String get quranLibraryHeading => 'Read the Quran';
+
+  @override
+  String get quranLibraryDescription =>
+      'Browse the surahs and open a chapter to read its Arabic text.';
+
+  @override
+  String get quranSearchHint => 'Search surah name or number';
+
+  @override
+  String get clearSearch => 'Clear search';
+
+  @override
+  String quranSurahCount(int count) {
+    return '$count surahs';
+  }
+
+  @override
+  String get quranNoResults => 'No surahs match your search.';
+
+  @override
+  String get quranAyahs => 'ayahs';
+
+  @override
+  String get quranReadingTitle => 'Quran reading';
+
+  @override
+  String get quranPage => 'Page';
+
+  @override
+  String get quranBySurah => 'Quran by Surah';
+
+  @override
+  String get quranByJuz => 'Quran by Juz';
+
+  @override
+  String get quranFull => 'Full Quran';
+
+  @override
+  String quranJuzNumber(int number) {
+    return 'Juz $number';
+  }
+
+  @override
+  String quranPageCount(int page, int total) {
+    return 'Page $page of $total';
+  }
+
+  @override
+  String get previousPage => 'Previous page';
+
+  @override
+  String get nextPage => 'Next page';
+
+  @override
   String get qiblaTitle => 'Qibla';
 
   @override
