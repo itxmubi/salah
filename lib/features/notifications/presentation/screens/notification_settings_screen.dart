@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/widgets/app_card.dart';
 import '../../../../l10n/generated/app_localizations.dart';
 import '../../../prayer/domain/entities/prayer_settings.dart';
 import '../providers/notification_providers.dart';
 
 class NotificationSettingsScreen extends ConsumerStatefulWidget {
   const NotificationSettingsScreen({super.key});
-
   @override
   ConsumerState<NotificationSettingsScreen> createState() =>
       _NotificationSettingsScreenState();
@@ -18,122 +15,146 @@ class NotificationSettingsScreen extends ConsumerStatefulWidget {
 
 class _NotificationSettingsScreenState
     extends ConsumerState<NotificationSettingsScreen> {
-  static const _prayers = <PrayerName>[
-    PrayerName.fajr,
-    PrayerName.dhuhr,
-    PrayerName.asr,
-    PrayerName.maghrib,
-    PrayerName.isha,
-  ];
-
-  final _preferences = SharedPreferencesAsync();
-  final Map<PrayerName, bool> _enabled = {};
-  bool _loading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _load();
-  }
-
-  Future<void> _load() async {
-    for (final prayer in _prayers) {
-      _enabled[prayer] = await _preferences.getBool(_key(prayer)) ?? false;
+  bool _busy = false;
+  String? _message;
+  Future<void> _run(Future<void> Function() action) async {
+    setState(() {
+      _busy = true;
+      _message = null;
+    });
+    try {
+      await action();
+    } catch (_) {
+      if (mounted) {
+        setState(() => _message = AppLocalizations.of(context).alertsFailed);
+      }
+    } finally {
+      if (mounted) setState(() => _busy = false);
     }
-    if (mounted) setState(() => _loading = false);
   }
-
-  Future<void> _setEnabled(PrayerName prayer, bool value) async {
-    if (value) {
-      final allowed = await ref
-          .read(notificationServiceProvider)
-          .requestPermission();
-      if (!allowed) return;
-    }
-    await _preferences.setBool(_key(prayer), value);
-    if (mounted) setState(() => _enabled[prayer] = value);
-  }
-
-  String _key(PrayerName prayer) => 'notifications.${prayer.name}';
-
-  String _label(AppLocalizations strings, PrayerName prayer) =>
-      switch (prayer) {
-        PrayerName.fajr => strings.prayerFajr,
-        PrayerName.dhuhr => strings.prayerDhuhr,
-        PrayerName.asr => strings.prayerAsr,
-        PrayerName.maghrib => strings.prayerMaghrib,
-        PrayerName.isha => strings.prayerIsha,
-        PrayerName.sunrise => strings.prayerSunrise,
-        PrayerName.sunset => strings.prayerSunset,
-      };
 
   @override
   Widget build(BuildContext context) {
     final strings = AppLocalizations.of(context);
-    final colors = Theme.of(context).colorScheme;
+    final preferences = ref.watch(alertPreferencesProvider);
+    final sync = ref.watch(notificationSyncProvider);
     return Scaffold(
       appBar: AppBar(title: Text(strings.notificationSettingsTitle)),
-      body: _loading
-          ? const Center(child: CircularProgressIndicator())
-          : ListView(
-              padding: const EdgeInsets.all(AppSpacing.md),
+      body: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 760),
+            child: ListView(
+              padding: const EdgeInsets.all(20),
               children: [
-                AppCard(
-                  child: Row(
+                Text(strings.notificationPermissionDescription),
+                const SizedBox(height: 12),
+                Text(strings.alertsRollingNote),
+                const SizedBox(height: 16),
+                if (_message != null)
+                  Semantics(liveRegion: true, child: Text(_message!)),
+                sync.when(
+                  loading: () => const LinearProgressIndicator(),
+                  error: (_, _) => Text(strings.alertsFailed),
+                  data: (status) => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(
-                        Icons.notifications_active_outlined,
-                        color: colors.primary,
-                      ),
-                      const SizedBox(width: AppSpacing.md),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              strings.prayerAlertsTitle,
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            const SizedBox(height: AppSpacing.xs),
-                            Text(
-                              strings.notificationPermissionDescription,
-                              style: Theme.of(context).textTheme.bodyMedium
-                                  ?.copyWith(color: colors.onSurfaceVariant),
-                            ),
-                          ],
+                      Semantics(
+                        liveRegion: true,
+                        child: Text(
+                          status.permissionDenied
+                              ? strings.alertsDenied
+                              : status.needsLocation
+                              ? strings.alertsLocation
+                              : status.count == 0
+                              ? strings.alertsOff
+                              : strings.alertsSchedule(status.count),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                Text(
-                  strings.prayerAlertsTitle,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                AppCard(
-                  padding: AppSpacing.md,
-
-                  child: Column(
-                    children: [
-                      for (var index = 0; index < _prayers.length; index++) ...[
-                        if (index > 0) const Divider(height: 1),
-                        SwitchListTile.adaptive(
-                          contentPadding: EdgeInsets.zero,
-                          title: Text(_label(strings, _prayers[index])),
-                          subtitle: Text(strings.prayerTimeNotification),
-                          value: _enabled[_prayers[index]] ?? false,
-                          onChanged: (value) =>
-                              _setEnabled(_prayers[index], value),
+                      if (status.permissionDenied)
+                        TextButton(
+                          onPressed: _busy
+                              ? null
+                              : () => _run(
+                                  () => ref
+                                      .read(notificationServiceProvider)
+                                      .openSettings(),
+                                ),
+                          child: Text(strings.openSettings),
+                        ),
+                      if (status.until != null)
+                        Text(
+                          DateFormat.yMMMd(
+                            strings.localeName,
+                          ).add_jm().format(status.until!.toLocal()),
+                        ),
+                      if (!status.exact && status.count > 0) ...[
+                        Text(strings.alertsApproximate),
+                        TextButton(
+                          onPressed: _busy
+                              ? null
+                              : () => _run(() async {
+                                  await ref
+                                      .read(notificationServiceProvider)
+                                      .requestExactPermission();
+                                  ref.invalidate(notificationSyncProvider);
+                                }),
+                          child: Text(strings.allowExactAlerts),
                         ),
                       ],
                     ],
                   ),
                 ),
+                TextButton.icon(
+                  onPressed: _busy
+                      ? null
+                      : () {
+                          ref.invalidate(alertPreferencesProvider);
+                          ref.invalidate(notificationSyncProvider);
+                        },
+                  icon: const Icon(Icons.refresh),
+                  label: Text(strings.retry),
+                ),
+                preferences.when(
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  error: (_, _) => Text(strings.alertsFailed),
+                  data: (enabled) => Column(
+                    children: [
+                      for (final entry in <PrayerName, String>{
+                        PrayerName.fajr: strings.prayerFajr,
+                        PrayerName.dhuhr: strings.prayerDhuhr,
+                        PrayerName.asr: strings.prayerAsr,
+                        PrayerName.maghrib: strings.prayerMaghrib,
+                        PrayerName.isha: strings.prayerIsha,
+                      }.entries)
+                        SwitchListTile.adaptive(
+                          contentPadding: EdgeInsets.zero,
+                          title: Text(entry.value),
+                          subtitle: Text(strings.prayerTimeNotification),
+                          value: enabled.contains(entry.key),
+                          onChanged: _busy
+                              ? null
+                              : (value) => _run(() async {
+                                  final allowed = await ref
+                                      .read(alertPreferencesProvider.notifier)
+                                      .setEnabled(entry.key, value);
+                                  if (!allowed && mounted) {
+                                    setState(
+                                      () => _message =
+                                          strings.alertsPermissionDenied,
+                                    );
+                                  }
+                                }),
+                        ),
+                    ],
+                  ),
+                ),
               ],
             ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -10,6 +10,9 @@ import '../../domain/entities/prayer_settings.dart';
 import '../models/prayer_schedule_model.dart';
 
 class PrayerCalculationDataSource {
+  PrayerCalculationDataSource({DateTime Function()? now})
+    : _now = now ?? DateTime.now;
+  final DateTime Function() _now;
   static bool _timeZonesInitialized = false;
 
   String timezoneId(SavedLocation location) {
@@ -22,7 +25,7 @@ class PrayerCalculationDataSource {
 
   DateTime currentLocalDate(SavedLocation location) {
     final zone = _zone(location);
-    final now = timezone.TZDateTime.from(DateTime.now().toUtc(), zone);
+    final now = timezone.TZDateTime.from(_now().toUtc(), zone);
     return DateTime.utc(now.year, now.month, now.day);
   }
 
@@ -35,7 +38,7 @@ class PrayerCalculationDataSource {
     final zone = _zone(location);
 
     final requestedDate = date == null
-        ? timezone.TZDateTime.now(zone)
+        ? timezone.TZDateTime.from(_now().toUtc(), zone)
         : timezone.TZDateTime(zone, date.year, date.month, date.day);
     final localDate = timezone.TZDateTime(
       zone,
@@ -76,6 +79,7 @@ class PrayerCalculationDataSource {
         .toList(growable: false);
 
     return PrayerScheduleModel.fromJson({
+      'source': 'local',
       'locationId': location.id,
       'locationName': location.city,
       'latitude': location.latitude,

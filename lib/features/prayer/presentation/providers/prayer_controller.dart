@@ -43,8 +43,18 @@ class PrayerState {
 }
 
 class PrayerController extends AsyncNotifier<PrayerState> {
+  int _monthRequest = 0;
+  int _overviewRequest = 0;
+  int _generation = 0;
+  int _settingsRequest = 0;
+  PrayerSettings _persistedSettings = const PrayerSettings();
+  Future<void> _settingsQueue = Future.value();
+
   @override
   Future<PrayerState> build() async {
+    _generation++;
+    _monthRequest++;
+    _overviewRequest++;
     final location = ref.watch(activeLocationProvider);
     final loadSettings = ref.watch(loadPrayerSettingsProvider);
     final loadToday = ref.watch(loadTodayPrayerTimesProvider);
@@ -52,6 +62,7 @@ class PrayerController extends AsyncNotifier<PrayerState> {
     final settings = settingsResult is core.Success<PrayerSettings>
         ? settingsResult.value
         : const PrayerSettings();
+    _persistedSettings = settings;
     if (location == null) return PrayerState(settings: settings);
 
     final overviewResult = await loadToday(location, settings);
@@ -77,14 +88,28 @@ class PrayerController extends AsyncNotifier<PrayerState> {
     final overview = current?.overview;
     final location = ref.read(activeLocationProvider);
     if (current == null || location == null || overview == null) return;
+    final request = ++_monthRequest;
+    final generation = _generation;
     final selected = month ?? current.selectedMonth ?? overview.today.localDate;
     final normalized = DateTime(selected.year, selected.month);
-    _update(selectedMonth: normalized, isLoadingMonth: true, clearIssue: true);
+    _update(
+      selectedMonth: normalized,
+      isLoadingMonth: true,
+      clearIssue: true,
+      monthSchedules:
+          current.selectedMonth?.year == normalized.year &&
+              current.selectedMonth?.month == normalized.month
+          ? current.monthSchedules
+          : const [],
+    );
     final result = await ref.read(loadMonthlyPrayerTimesProvider)(
       location,
       current.settings,
       normalized,
     );
+    if (!ref.mounted || request != _monthRequest || generation != _generation) {
+      return;
+    }
     if (result is core.Success<List<PrayerSchedule>>) {
       _update(monthSchedules: result.value, isLoadingMonth: false);
     } else {
@@ -98,21 +123,25 @@ class PrayerController extends AsyncNotifier<PrayerState> {
   Future<void> refreshOverview() async {
     final current = state.asData?.value;
     final location = ref.read(activeLocationProvider);
-    if (current == null || location == null) return;
+    if (current == null) {
+      ref.invalidateSelf();
+      return;
+    }
+    if (location == null) return;
+    final request = ++_overviewRequest;
+    final generation = _generation;
     final result = await ref.read(loadTodayPrayerTimesProvider)(
       location,
       current.settings,
     );
+    if (!ref.mounted ||
+        request != _overviewRequest ||
+        generation != _generation) {
+      return;
+    }
     if (result is core.Success<PrayerOverview>) {
       final overview = result.value;
-      _update(
-        overview: overview,
-        selectedMonth: DateTime(
-          overview.today.localDate.year,
-          overview.today.localDate.month,
-        ),
-        clearIssue: true,
-      );
+      _update(overview: overview, clearIssue: true);
     } else {
       _update(issue: _toIssue((result as core.Error<PrayerOverview>).error));
     }
@@ -121,17 +150,48 @@ class PrayerController extends AsyncNotifier<PrayerState> {
   Future<void> updateSettings(PrayerSettings settings) async {
     final current = state.asData?.value;
     if (current == null) return;
-    _update(settings: settings, clearIssue: true);
-    final saved = await ref.read(savePrayerSettingsProvider)(settings);
+    final generation = _generation;
+    final request = ++_settingsRequest;
+    _monthRequest++;
+    _overviewRequest++;
+    final reloadMonth =
+        current.monthSchedules.isNotEmpty || current.isLoadingMonth;
+    _update(
+      settings: settings,
+      monthSchedules: const [],
+      isLoadingMonth: reloadMonth,
+      clearIssue: true,
+    );
+    // Keep disk writes in the same order as user edits.
+    final saveSettings = ref.read(savePrayerSettingsProvider);
+    final save = _settingsQueue
+        .catchError((Object _) {})
+        .then((_) => saveSettings(settings));
+    _settingsQueue = save.then((_) {});
+    final saved = await save;
+    if (!ref.mounted) return;
+    if (saved is core.Success<void>) _persistedSettings = settings;
+    if (request != _settingsRequest) return;
+    if (generation != _generation) {
+      ref.invalidateSelf();
+      return;
+    }
     if (saved is core.Error<void>) {
-      _update(issue: PrayerIssue.storageFailed);
+      _update(
+        settings: _persistedSettings,
+        monthSchedules: current.monthSchedules,
+        isLoadingMonth: false,
+        issue: PrayerIssue.storageFailed,
+      );
       return;
     }
     await refreshOverview();
-    final latest = state.asData?.value;
-    if (latest?.selectedMonth != null && latest!.monthSchedules.isNotEmpty) {
-      await loadMonth(latest.selectedMonth);
+    if (!ref.mounted ||
+        request != _settingsRequest ||
+        generation != _generation) {
+      return;
     }
+    if (reloadMonth) await loadMonth(current.selectedMonth);
   }
 
   Future<void> changeAdjustment(PrayerName prayer, int minutes) async {
@@ -151,6 +211,7 @@ class PrayerController extends AsyncNotifier<PrayerState> {
     bool clearIssue = false,
     bool? isLoadingMonth,
   }) {
+    if (!ref.mounted) return;
     final current = state.asData?.value;
     if (current == null) return;
     state = AsyncData(

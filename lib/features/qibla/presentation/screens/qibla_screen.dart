@@ -11,6 +11,7 @@ import '../../../../features/location/presentation/providers/location_controller
 import '../../../../l10n/generated/app_localizations.dart';
 import '../../domain/entities/qibla_direction.dart';
 import '../providers/qibla_providers.dart';
+import '../widgets/qibla_direction_indicator.dart';
 
 class QiblaScreen extends ConsumerWidget {
   const QiblaScreen({super.key});
@@ -69,9 +70,8 @@ class QiblaScreen extends ConsumerWidget {
                 const SizedBox(height: AppSpacing.lg),
                 Center(
                   child: Semantics(
-                    label: strings.qiblaBearing,
-                    value:
-                        '${direction.bearingDegrees.toStringAsFixed(0)} degrees',
+                    label: strings.kaabaDirection,
+                    value: '${direction.bearingDegrees.toStringAsFixed(0)}°',
                     child: ExcludeSemantics(
                       child: _CompassDial(
                         relativeBearing: relativeBearing,
@@ -279,11 +279,10 @@ class _CompassDial extends StatelessWidget {
                   ),
                 ),
               ),
-              AnimatedRotation(
-                turns: relativeBearing / 360,
-                duration: const Duration(milliseconds: 180),
-                curve: Curves.easeOut,
-                child: Icon(Icons.navigation_rounded, size: 104, color: color),
+              QiblaDirectionIndicator(
+                bearing: relativeBearing,
+                dialSize: size,
+                color: color,
               ),
             ],
           ),

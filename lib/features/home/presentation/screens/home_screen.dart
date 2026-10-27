@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/settings/app_settings.dart';
+import '../../../../core/widgets/setup_guide.dart';
 import '../../../../core/theme/app_icons.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/app_card.dart';
@@ -18,6 +20,7 @@ import '../../../../features/prayer/domain/entities/prayer_issue.dart';
 import '../../../../features/prayer/domain/entities/prayer_settings.dart';
 import '../../../../features/prayer/presentation/providers/prayer_controller.dart';
 import '../../../../l10n/generated/app_localizations.dart';
+import '../widgets/daily_ayah_card.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -48,7 +51,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) _refresh();
+    if (state == AppLifecycleState.resumed) {
+      ref.invalidate(calendarTodayProvider);
+      _refresh();
+    }
   }
 
   void _tick() {
@@ -80,6 +86,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   Widget build(BuildContext context) {
     final strings = AppLocalizations.of(context);
     final prayerState = ref.watch(prayerControllerProvider);
+    final dailyDate =
+        ref.watch(calendarTodayProvider).asData?.value ??
+        ref.watch(calendarDateReaderProvider)();
+    ref.listen(calendarTodayProvider, (previous, next) {
+      if (next.asData?.value != null &&
+          previous?.asData?.value != null &&
+          next.asData?.value != previous?.asData?.value) {
+        _refresh();
+      }
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text(strings.appTitle),
@@ -90,61 +106,77 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             icon: const Icon(AppIcons.notifications),
           ),
           IconButton(
-            tooltip: strings.locationTitle,
-            onPressed: () => context.push('/location'),
-            icon: const Icon(AppIcons.location),
-          ),
-          IconButton(
-            tooltip: strings.settingsTitle,
-            onPressed: () => context.push('/settings'),
-            icon: const Icon(AppIcons.settings),
+            tooltip: strings.hijriCalendarTitle,
+            onPressed: () => context.push('/calendar'),
+            icon: const Icon(Icons.calendar_month_outlined),
           ),
           const SizedBox(width: AppSpacing.xs),
         ],
       ),
       body: SafeArea(
-        child: prayerState.when(
-          loading: () =>
-              Center(child: AppLoadingState(label: strings.prayerTimesTitle)),
-          error: (error, stackTrace) => AppErrorState(
-            title: strings.prayerTimesTitle,
-            description: strings.prayerCalculationError,
-            retryLabel: strings.retry,
-            onRetry: _refresh,
-          ),
-          data: (state) {
-            final overview = state.overview;
-            if (overview == null) {
-              if (state.issue != null) {
-                return AppErrorState(
+        child:
+            ref.watch(appSettingsProvider).asData?.value.setupComplete == false
+            ? ListView(
+                padding: const EdgeInsets.only(bottom: 24),
+                children: [
+                  const SetupGuide(embedded: true),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: DailyAyahCard(date: dailyDate),
+                  ),
+                ],
+              )
+            : prayerState.when(
+                loading: () => Center(
+                  child: AppLoadingState(label: strings.prayerTimesTitle),
+                ),
+                error: (error, stackTrace) => AppErrorState(
                   title: strings.prayerTimesTitle,
-                  description: switch (state.issue!) {
-                    PrayerIssue.noLocation => strings.prayerNoLocationError,
-                    PrayerIssue.timezoneUnavailable =>
-                      strings.prayerTimezoneError,
-                    PrayerIssue.calculationFailed =>
-                      strings.prayerCalculationError,
-                    PrayerIssue.storageFailed => strings.prayerStorageError,
-                  },
+                  description: strings.prayerCalculationError,
                   retryLabel: strings.retry,
                   onRetry: _refresh,
-                );
-              }
-              return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.lg),
-                  child: AppEmptyState(
-                    title: strings.welcomeTitle,
-                    description: strings.prayerNoLocation,
-                    actionLabel: strings.openLocation,
-                    onAction: () => context.push('/location'),
-                  ),
                 ),
-              );
-            }
-            return _dashboard(context, strings, overview, state.settings);
-          },
-        ),
+                data: (state) {
+                  final overview = state.overview;
+                  if (overview == null) {
+                    if (state.issue != null) {
+                      return AppErrorState(
+                        title: strings.prayerTimesTitle,
+                        description: switch (state.issue!) {
+                          PrayerIssue.noLocation =>
+                            strings.prayerNoLocationError,
+                          PrayerIssue.timezoneUnavailable =>
+                            strings.prayerTimezoneError,
+                          PrayerIssue.calculationFailed =>
+                            strings.prayerCalculationError,
+                          PrayerIssue.storageFailed =>
+                            strings.prayerStorageError,
+                        },
+                        retryLabel: strings.retry,
+                        onRetry: _refresh,
+                      );
+                    }
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(AppSpacing.lg),
+                        child: AppEmptyState(
+                          title: strings.welcomeTitle,
+                          description: strings.prayerNoLocation,
+                          actionLabel: strings.openLocation,
+                          onAction: () => context.push('/location'),
+                        ),
+                      ),
+                    );
+                  }
+                  return _dashboard(
+                    context,
+                    strings,
+                    overview,
+                    state.settings,
+                    dailyDate,
+                  );
+                },
+              ),
       ),
     );
   }
@@ -154,13 +186,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     AppLocalizations strings,
     PrayerOverview overview,
     PrayerSettings settings,
+    DateTime dailyDate,
   ) {
     final today = overview.today;
     final labels = _PrayerLabels(strings);
-    final date = DateFormat.yMMMMEEEEd(
-      strings.localeName,
-    ).format(today.localDate);
-    final hijriDate = ref.watch(hijriDateProvider(today.localDate));
+    final date = DateFormat.yMMMMEEEEd(strings.localeName).format(dailyDate);
+    final hijriDate = ref.watch(hijriDateProvider(dailyDate));
     return Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 760),
@@ -191,7 +222,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                   label:
                                       '${strings.hijriDate}: ${value.day} ${value.monthName} ${value.year}',
                                   child: Text(
-                                    '${value.day} ${value.monthName} ${value.year} AH',
+                                    '${value.day} ${value.localizedMonth(strings.localeName)} ${value.year} ${strings.hijriEra}',
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleSmall
@@ -220,11 +251,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     ],
                   ),
                 ),
-                IconButton.filledTonal(
-                  tooltip: strings.locationTitle,
-                  onPressed: () => context.push('/location'),
-                  icon: const Icon(AppIcons.location),
-                ),
               ],
             ),
             const SizedBox(height: AppSpacing.lg),
@@ -235,6 +261,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               strings: strings,
               settings: settings,
             ),
+            const SizedBox(height: AppSpacing.lg),
+            DailyAyahCard(date: dailyDate),
             const SizedBox(height: AppSpacing.lg),
             Row(
               children: [
@@ -286,6 +314,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               ),
             ],
             const SizedBox(height: AppSpacing.sm),
+            Text(
+              today.source == PrayerScheduleSource.aladhan
+                  ? strings.sourceAladhan
+                  : strings.sourceLocal,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.labelMedium,
+            ),
             Text(
               strings.prayerAccuracyNote,
               textAlign: TextAlign.center,

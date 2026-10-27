@@ -1,0 +1,322 @@
+{
+  "@@locale": "ar",
+  "appTitle": "صلاح",
+  "hijriDate": "التاريخ الهجري",
+  "navHome": "الرئيسية",
+  "navPrayer": "الصلاة",
+  "navQuran": "القرآن",
+  "navQibla": "القبلة",
+  "quranTitle": "القرآن الكريم",
+  "quranComingSoon": "يجري إعداد مساحة قراءة القرآن.",
+  "quranLoading": "جارٍ تحميل القرآن",
+  "quranLoadError": "تعذر تحميل القرآن. تحقق من الاتصال وحاول مجددًا.",
+  "quranLibraryHeading": "اقرأ القرآن الكريم",
+  "quranLibraryDescription": "تصفح السور وافتح سورة لقراءة نصها العربي.",
+  "quranSearchHint": "ابحث باسم السورة أو رقمها",
+  "clearSearch": "مسح البحث",
+  "quranSurahCount": "{count} سورة",
+  "@quranSurahCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "quranNoResults": "لا توجد سور تطابق بحثك.",
+  "quranAyahs": "آية",
+  "quranReadingTitle": "قراءة القرآن",
+  "quranPage": "الصفحة",
+  "quranPartNumber": "الجزء {number}",
+  "@quranPartNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "quranAyahNumber": "الآية {number}",
+  "@quranAyahNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "quranBySurah": "القرآن حسب السورة",
+  "quranByJuz": "القرآن حسب الجزء",
+  "quranFull": "القرآن كاملًا",
+  "quranJuzNumber": "الجزء {number}",
+  "@quranJuzNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "quranPageCount": "الصفحة {page} من {total}",
+  "@quranPageCount": {
+    "placeholders": {
+      "page": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "previousPage": "الصفحة السابقة",
+  "nextPage": "الصفحة التالية",
+  "qiblaTitle": "القبلة",
+  "qiblaComingSoon": "ستتوفر بوصلة القبلة في مرحلة لاحقة.",
+  "qiblaLocationRequired": "اختر موقعًا لحساب اتجاه الكعبة.",
+  "qiblaBearing": "الاتجاه من الشمال",
+  "kaabaDistance": "المسافة إلى الكعبة",
+  "compassUnavailable": "إشارة البوصلة غير متاحة. تُظهر علامة الكعبة الاتجاه من الشمال.",
+  "compassNorth": "ش",
+  "compassEast": "ق",
+  "compassSouth": "ج",
+  "compassWest": "غ",
+  "compassAlignHint": "أدر جهازك حتى تصبح علامة الكعبة في أعلى البوصلة.",
+  "compassSearching": "جارٍ البحث عن إشارة البوصلة…",
+  "compassCalibrationTitle": "معايرة البوصلة",
+  "compassCalibrationDescription": "حرّك الهاتف بشكل الرقم ثمانية عدة مرات وأبعده عن المغناطيس والمعادن والأجهزة الإلكترونية. قد يؤثر التداخل والانحراف المغناطيسي المحلي في القراءة.",
+  "notificationSettingsTitle": "تنبيهات الصلاة",
+  "settingsTitle": "الإعدادات",
+  "settingsPrayerSection": "الصلاة والموقع",
+  "prayerAlertsTitle": "إشعارات الصلاة",
+  "notificationPermissionDescription": "اختر الصلوات التي تريد تنبيهًا لها. قد يطلب الجهاز إذن الإشعارات عند التفعيل لأول مرة.",
+  "prayerTimeNotification": "تنبيه عند دخول وقت الصلاة",
+  "homeTitle": "معاينة نظام التصميم",
+  "welcomeTitle": "مرحبًا بك في صلاح",
+  "viewAllPrayerTimes": "جميع أوقات الصلاة",
+  "homeDescription": "أساس بصري مشترك لكل ميزات صلاح.",
+  "navSystem": "النظام",
+  "navStates": "الحالات",
+  "navAppearance": "المظهر",
+  "sectionTypography": "الخطوط",
+  "typeDisplay": "إرشاد واضح كل يوم",
+  "typeHeadline": "تجربة قراءة مريحة",
+  "typeBody": "استخدم أحجام خطوط متسقة لتكون القراءة سهلة ومريحة.",
+  "sectionButtons": "الأزرار",
+  "buttonPrimary": "الإجراء الأساسي",
+  "buttonSecondary": "الإجراء الثانوي",
+  "buttonText": "إجراء نصي",
+  "buttonPressed": "تم اختيار الزر التجريبي",
+  "sectionCards": "البطاقات",
+  "cardTitle": "مساحة مشتركة",
+  "cardDescription": "تستخدم البطاقات ألوان المظهر النشط وحواف مستديرة وتباعدًا متناسقًا.",
+  "sectionStates": "الحالات المشتركة",
+  "loadingLabel": "جارٍ التحميل",
+  "emptyTitle": "لا توجد عناصر محفوظة",
+  "emptyDescription": "ستظهر العناصر المحفوظة هنا عند توفرها.",
+  "emptyAction": "عرض إجراء تجريبي",
+  "errorTitle": "تعذر تحميل المحتوى",
+  "errorDescription": "تحقق من اتصالك وحاول مجددًا.",
+  "retry": "حاول مجددًا",
+  "retryPressed": "تم اختيار إعادة المحاولة",
+  "sectionColors": "لون التمييز",
+  "sectionThemeMode": "نمط المظهر",
+  "appearanceTitle": "إعدادات المظهر",
+  "accentColor": "اختر لون التمييز",
+  "themeMode": "اختر مظهر التطبيق",
+  "themeSystem": "النظام",
+  "themeLight": "فاتح",
+  "themeDark": "داكن",
+  "close": "إغلاق",
+  "colorForest": "أخضر غابي",
+  "colorTeal": "فيروزي",
+  "colorIndigo": "نيلي",
+  "colorAmber": "كهرماني",
+  "colorRose": "وردي",
+  "locationTitle": "موقعك",
+  "locationSubtitle": "اختر مدينة لأوقات الصلاة المحلية.",
+  "activeLocation": "الموقع النشط",
+  "noActiveLocation": "لم يتم اختيار موقع نشط",
+  "currentLocation": "الموقع الحالي",
+  "currentLocationDescription": "استخدم موقع جهازك أثناء فتح التطبيق.",
+  "useCurrentLocation": "استخدام الموقع الحالي",
+  "saveCurrentLocation": "حفظ هذا الموقع",
+  "searchCityTitle": "البحث عن مدينة",
+  "searchCityHint": "ابحث عن مدينة أو عنوان",
+  "search": "بحث",
+  "searchResults": "نتائج البحث",
+  "savedLocations": "المواقع المحفوظة",
+  "noSavedLocations": "لا توجد مواقع محفوظة",
+  "noSavedLocationsDescription": "ابحث عن مدينة واحفظها للتبديل بين المواقع بسهولة.",
+  "saveLocation": "حفظ الموقع",
+  "removeLocation": "حذف الموقع",
+  "activeLabel": "نشط",
+  "selectLocation": "استخدام هذا الموقع",
+  "privacyLocationNote": "يُستخدم موقع الجهاز أثناء فتح التطبيق فقط. تُحفظ المدينة المختارة والأماكن على هذا الجهاز.",
+  "alreadySaved": "محفوظ",
+  "unknownCity": "مكان بلا اسم",
+  "locationPermissionDenied": "لم يُمنح إذن الموقع. يمكنك البحث عن مدينة بدلًا من ذلك.",
+  "locationPermissionPermanentlyDenied": "إذن الموقع لتطبيق صلاح متوقف. فعّله من إعدادات الجهاز أو ابحث عن مدينة.",
+  "locationServicesDisabled": "خدمات الموقع متوقفة. فعّلها من الإعدادات أو ابحث عن مدينة.",
+  "currentLocationUnavailable": "تعذر تحديد موقعك الحالي. حاول مجددًا أو ابحث عن مدينة.",
+  "locationNoResults": "لم يتم العثور على مدينة مطابقة. جرّب بحثًا أكثر تحديدًا.",
+  "locationSearchFailed": "البحث عن المدن غير متاح مؤقتًا. حاول لاحقًا.",
+  "locationStorageFailed": "تعذرت قراءة المواقع المحفوظة أو تحديثها.",
+  "locationUnknownError": "حدث خطأ في الموقع. حاول مجددًا.",
+  "openSettings": "فتح الإعدادات",
+  "searchingCities": "جارٍ البحث عن المدن",
+  "loadingLocations": "جارٍ تحميل المواقع المحفوظة",
+  "locationUpdated": "تم تحديث الموقع النشط",
+  "locationSaved": "تم حفظ الموقع",
+  "locationRemoved": "تم حذف الموقع",
+  "prayerTimesTitle": "أوقات الصلاة",
+  "prayerTimesSubtitle": "عرض هادئ لأوقات صلوات اليوم.",
+  "prayerNoLocation": "اختر موقعًا لعرض أوقات الصلاة المحلية.",
+  "openLocation": "اختيار الموقع",
+  "prayerSettings": "إعدادات الحساب",
+  "todaySchedule": "أوقات اليوم",
+  "todayLabel": "اليوم",
+  "monthlySchedule": "الجدول الشهري",
+  "nextPrayer": "الصلاة القادمة",
+  "currentPrayer": "الصلاة الحالية",
+  "timeRemaining": "الوقت المتبقي",
+  "prayerStarted": "حان وقت",
+  "sunriseSunset": "الشمس",
+  "calculationMethod": "طريقة الحساب",
+  "madhab": "حساب العصر",
+  "madhabStandard": "الجمهور",
+  "madhabHanafi": "حنفي",
+  "manualAdjustments": "تعديل الدقائق",
+  "timeFormat": "صيغة ٢٤ ساعة",
+  "highLatitudeNote": "يُختار تعديل خطوط العرض العليا تلقائيًا لهذا الموقع.",
+  "prayerAccuracyNote": "تُحفظ أوقات AlAdhan على الجهاز. اتبع جدول مسجدك المحلي إذا اختلفت الأوقات.",
+  "prayerNoLocationError": "اختر موقعًا قبل عرض أوقات الصلاة.",
+  "prayerTimezoneError": "تعذر تحديد المنطقة الزمنية لهذا الموقع.",
+  "prayerCalculationError": "تعذر حساب أوقات الصلاة. تحقق من موقعك والإعدادات.",
+  "prayerStorageError": "تعذر حفظ إعدادات الصلاة على الجهاز.",
+  "adjustmentMinutes": "{minutes} دقيقة",
+  "@adjustmentMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "monthDayCount": "{count} يومًا",
+  "previousMonth": "الشهر السابق",
+  "nextMonth": "الشهر التالي",
+  "decreaseAdjustment": "تقليل تعديل {prayer}",
+  "increaseAdjustment": "زيادة تعديل {prayer}",
+  "@decreaseAdjustment": {
+    "placeholders": {
+      "prayer": {
+        "type": "String"
+      }
+    }
+  },
+  "@increaseAdjustment": {
+    "placeholders": {
+      "prayer": {
+        "type": "String"
+      }
+    }
+  },
+  "@monthDayCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "prayerFajr": "الفجر",
+  "prayerSunrise": "الشروق",
+  "prayerDhuhr": "الظهر",
+  "prayerAsr": "العصر",
+  "prayerMaghrib": "المغرب",
+  "prayerSunset": "الغروب",
+  "prayerIsha": "العشاء",
+  "methodMuslimWorldLeague": "رابطة العالم الإسلامي",
+  "methodEgyptian": "الهيئة المصرية العامة للمساحة",
+  "methodKarachi": "جامعة العلوم الإسلامية، كراتشي",
+  "methodUmmAlQura": "أم القرى",
+  "methodDubai": "دبي",
+  "methodQatar": "قطر",
+  "methodKuwait": "الكويت",
+  "methodMoonsightingCommittee": "لجنة رؤية الهلال",
+  "methodSingapore": "سنغافورة",
+  "methodTurkiye": "تركيا (ديانت)",
+  "methodTehran": "طهران",
+  "methodNorthAmerica": "أمريكا الشمالية (ISNA)",
+  "methodMorocco": "المغرب",
+  "quranTimeout": "استغرق الطلب وقتًا طويلًا. حاول مجددًا أو نزّل القرآن للقراءة دون اتصال.",
+  "quranFontSize": "حجم خط القرآن",
+  "jumpToAyah": "الانتقال إلى آية",
+  "jumpToPage": "الانتقال إلى صفحة",
+  "pageRange": "الصفحة (١–٦٠٤)",
+  "openPage": "فتح الصفحة",
+  "bookmarkAyah": "حفظ الآية",
+  "removeBookmark": "حذف العلامة",
+  "copyAyah": "نسخ الآية",
+  "copied": "تم نسخ الآية",
+  "showTranslation": "الترجمة الإنجليزية",
+  "translationAttribution": "صحيح إنترناشيونال · AlQuran Cloud",
+  "playRecitation": "تشغيل التلاوة",
+  "stopRecitation": "إيقاف التلاوة",
+  "recitationAttribution": "مشاري العفاسي · AlQuran Cloud · تتطلب التلاوة اتصالًا بالإنترنت",
+  "saveFailed": "تعذر حفظ التغييرات. حاول مجددًا.",
+  "quranDownload": "تنزيل القرآن العربي",
+  "quranDownloadHint": "احفظ جميع الصفحات العربية على الجهاز للقراءة دون اتصال.",
+  "quranDownloaded": "القرآن العربي جاهز دون اتصال",
+  "quranDownloading": "جارٍ تنزيل القرآن…",
+  "downloadFailed": "تعذر التنزيل. حاول مجددًا؛ المحتوى المحفوظ ما زال متاحًا.",
+  "continueReading": "متابعة القراءة",
+  "bookmarks": "العلامات المرجعية",
+  "noBookmarks": "اضغط على آية أثناء القراءة لحفظ علامة مرجعية.",
+  "language": "اللغة",
+  "languageSystem": "لغة الجهاز",
+  "languageEnglish": "English",
+  "languageArabic": "العربية",
+  "setupTitle": "إعداد أوقات الصلاة",
+  "setupDescription": "اختر موقعك ثم راجع طريقة الحساب المعتمدة في مسجدك المحلي.",
+  "setupLocation": "١. اختر موقعك",
+  "setupCalculation": "٢. راجع إعدادات الحساب",
+  "finishSetup": "ابدأ استخدام صلاح",
+  "reviewSetup": "مراجعة الإعداد",
+  "sourceAladhan": "المصدر: AlAdhan",
+  "sourceLocal": "المصدر: حساب على الجهاز",
+  "alertsDenied": "الإشعارات متوقفة. فعّلها في إعدادات الجهاز ثم حاول مجددًا.",
+  "alertsFailed": "تعذر تحديث تنبيهات الصلاة. حاول مجددًا.",
+  "alertsLocation": "اختر موقعًا لجدولة تنبيهات الصلاة.",
+  "alertsOff": "لا توجد تنبيهات صلاة مفعّلة.",
+  "alertsSchedule": "تمت جدولة {count} تنبيهًا. افتح صلاح بانتظام لتجديد جدول الأيام الـ١٢ القادمة.",
+  "@alertsSchedule": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "alertsApproximate": "قد يؤخر أندرويد التنبيهات. اسمح بالمنبهات الدقيقة للتنبيه في الوقت المحسوب.",
+  "allowExactAlerts": "السماح بالمنبهات الدقيقة",
+  "alertsPermissionDenied": "لم يُمنح إذن الإشعارات.",
+  "alertsRollingNote": "تتبع التنبيهات المدينة المختارة وإعدادات الحساب. يتبع الصوت إعدادات الجهاز. يتجدد الجدول عند فتح صلاح؛ صوت الأذان الكامل غير مضمّن.",
+  "hijriCalendarTitle": "التقويم الهجري",
+  "calendarMethodNote": "تقويم أم القرى · يعمل دون اتصال. قد تختلف التواريخ والمناسبات بحسب رؤية الهلال محليًا.",
+  "calendarRange": "يدعم التقويم السنوات الهجرية من ١٣٥٦ إلى ١٥٠٠.",
+  "chooseHijriMonth": "اختر الشهر والسنة",
+  "calendarMonth": "الشهر الهجري",
+  "calendarYear": "السنة الهجرية",
+  "showCalendar": "عرض الشهر",
+  "calendarToday": "اليوم",
+  "calendarNumberLegend": "الرقم الكبير: اليوم الهجري · الرقم الصغير: اليوم الميلادي · النقطة: مناسبة إسلامية",
+  "monthOccasions": "مناسبات هذا الشهر",
+  "noMonthOccasions": "لا توجد مناسبات مدرجة لهذا الشهر.",
+  "islamicNewYear": "رأس السنة الهجرية",
+  "dayOfAshura": "يوم عاشوراء",
+  "ramadanBegins": "بداية رمضان",
+  "eidAlFitr": "عيد الفطر",
+  "dayOfArafah": "يوم عرفة",
+  "eidAlAdha": "عيد الأضحى",
+  "daysOfTashriq": "أيام التشريق",
+  "kaabaDirection": "اتجاه الكعبة",
+  "ayahOfTheDay": "آية اليوم",
+  "dailyAyahUnavailable": "تعذر تحميل آية اليوم. اتصل بالإنترنت أو نزّل القرآن العربي.",
+  "dailyTranslationUnavailable": "الترجمة غير متاحة · حاول مجددًا",
+  "readThisSurah": "قراءة السورة",
+  "hijriEra": "هـ"
+}

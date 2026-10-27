@@ -11,17 +11,20 @@ import '../datasources/prayer_calculation_data_source.dart';
 import '../datasources/prayer_local_data_source.dart';
 
 class PrayerRepositoryImpl implements PrayerRepository {
-  const PrayerRepositoryImpl({
+  PrayerRepositoryImpl({
     required PrayerCalculationDataSource calculation,
     required AladhanPrayerDataSource aladhan,
     required PrayerLocalDataSource local,
+    DateTime Function()? now,
   }) : _calculation = calculation,
        _aladhan = aladhan,
-       _local = local;
+       _local = local,
+       _now = now ?? DateTime.now;
 
   final PrayerCalculationDataSource _calculation;
   final AladhanPrayerDataSource _aladhan;
   final PrayerLocalDataSource _local;
+  final DateTime Function() _now;
 
   @override
   Future<core.Result<PrayerSettings>> loadSettings() async {
@@ -53,8 +56,10 @@ class PrayerRepositoryImpl implements PrayerRepository {
   ) async {
     try {
       final today = await _schedule(location, settings);
-      final now = DateTime.now().toUtc();
-      final prayers = today.events.where((event) => event.isObligatoryPrayer);
+      final now = _now().toUtc();
+      final prayers =
+          today.events.where((event) => event.isObligatoryPrayer).toList()
+            ..sort((a, b) => a.timeUtc.compareTo(b.timeUtc));
       PrayerEvent? nextPrayer;
       PrayerEvent? currentPrayer;
       for (final event in prayers) {
@@ -125,7 +130,12 @@ class PrayerRepositoryImpl implements PrayerRepository {
           _calculation.timezoneId(location),
         );
         for (final schedule in remoteSchedules) {
-          await _writeCached(location, settings, schedule.localDate, schedule);
+          await _tryWriteCached(
+            location,
+            settings,
+            schedule.localDate,
+            schedule,
+          );
         }
         return core.Success(remoteSchedules);
       } catch (_) {
@@ -164,7 +174,7 @@ class PrayerRepositoryImpl implements PrayerRepository {
         localDate,
         _calculation.timezoneId(location),
       );
-      await _writeCached(location, settings, localDate, schedule);
+      await _tryWriteCached(location, settings, localDate, schedule);
       return schedule;
     } catch (_) {
       return _calculation.calculate(location, settings, date: localDate);
@@ -175,14 +185,37 @@ class PrayerRepositoryImpl implements PrayerRepository {
     SavedLocation location,
     PrayerSettings settings,
     DateTime date,
-  ) => _local.readSchedule(_cacheKey(location, settings, date));
+  ) async {
+    try {
+      final schedule = await _local.readSchedule(
+        _cacheKey(location, settings, date),
+      );
+      if (schedule == null ||
+          schedule.events.length != PrayerName.values.length ||
+          PrayerName.values.any(
+            (name) => !schedule.events.any((e) => e.prayer == name),
+          )) {
+        return null;
+      }
+      return schedule;
+    } catch (_) {
+      // A damaged cache must not disable online or local calculations.
+      return null;
+    }
+  }
 
-  Future<void> _writeCached(
+  Future<void> _tryWriteCached(
     SavedLocation location,
     PrayerSettings settings,
     DateTime date,
     PrayerSchedule schedule,
-  ) => _local.writeSchedule(_cacheKey(location, settings, date), schedule);
+  ) async {
+    try {
+      await _local.writeSchedule(_cacheKey(location, settings, date), schedule);
+    } catch (_) {
+      // The fetched schedule remains usable if storage is unavailable.
+    }
+  }
 
   String _cacheKey(
     SavedLocation location,

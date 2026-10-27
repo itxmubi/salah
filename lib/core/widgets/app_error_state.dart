@@ -20,37 +20,39 @@ class AppErrorState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Center(
-    child: Padding(
-      padding: const EdgeInsets.all(AppSpacing.xl),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            AppIcons.error,
-            size: 44,
-            color: Theme.of(context).colorScheme.error,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Text(
-            title,
-            style: Theme.of(context).textTheme.titleLarge,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            description,
-            style: Theme.of(context).textTheme.bodyMedium,
-            textAlign: TextAlign.center,
-          ),
-          if (retryLabel != null && onRetry != null) ...[
-            const SizedBox(height: AppSpacing.lg),
-            AppButton(
-              label: retryLabel!,
-              icon: AppIcons.retry,
-              onPressed: onRetry,
+    child: SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.xl),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              AppIcons.error,
+              size: 44,
+              color: Theme.of(context).colorScheme.error,
             ),
+            const SizedBox(height: AppSpacing.md),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.titleLarge,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            Text(
+              description,
+              style: Theme.of(context).textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ),
+            if (retryLabel != null && onRetry != null) ...[
+              const SizedBox(height: AppSpacing.lg),
+              AppButton(
+                label: retryLabel!,
+                icon: AppIcons.retry,
+                onPressed: onRetry,
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     ),
   );

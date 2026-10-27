@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/settings/app_settings.dart';
+import '../../../../core/widgets/setup_guide.dart';
 import '../../../../core/theme/app_icons.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/theme_settings.dart';
@@ -22,18 +24,75 @@ class SettingsScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
+          DropdownButtonFormField<String>(
+            key: ValueKey(
+              ref.watch(appSettingsProvider).asData?.value.language,
+            ),
+            initialValue:
+                ref.watch(appSettingsProvider).asData?.value.language ??
+                'system',
+            decoration: InputDecoration(
+              labelText: strings.language,
+              prefixIcon: const Icon(Icons.language),
+            ),
+            isExpanded: true,
+            items: [
+              DropdownMenuItem(
+                value: 'system',
+                child: Text(strings.languageSystem),
+              ),
+              DropdownMenuItem(
+                value: 'en',
+                child: Text(strings.languageEnglish),
+              ),
+              DropdownMenuItem(
+                value: 'ar',
+                child: Text(strings.languageArabic),
+              ),
+            ],
+            onChanged: (value) async {
+              try {
+                await ref
+                    .read(appSettingsProvider.notifier)
+                    .setLanguage(value == 'system' ? null : value);
+              } catch (_) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(strings.saveFailed)));
+                }
+              }
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.checklist),
+            title: Text(strings.reviewSetup),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (context) => Scaffold(
+                  appBar: AppBar(title: Text(strings.reviewSetup)),
+                  body: SetupGuide(onFinished: () => Navigator.pop(context)),
+                ),
+              ),
+            ),
+          ),
           _SettingsSection(
             title: strings.settingsPrayerSection,
             children: [
               _SettingsLink(
                 icon: AppIcons.prayer,
                 title: strings.prayerSettings,
-                onTap: () => context.push('/prayer'),
+                onTap: () => context.push('/settings/calculation'),
               ),
               _SettingsLink(
                 icon: AppIcons.location,
                 title: strings.locationTitle,
                 onTap: () => context.push('/location'),
+              ),
+              _SettingsLink(
+                icon: Icons.calendar_month_outlined,
+                title: strings.hijriCalendarTitle,
+                onTap: () => context.push('/calendar'),
               ),
               _SettingsLink(
                 icon: AppIcons.notifications,

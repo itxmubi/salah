@@ -7,12 +7,14 @@ import '../features/home/presentation/screens/home_screen.dart';
 import '../features/location/presentation/screens/location_screen.dart';
 import '../features/notifications/presentation/screens/notification_settings_screen.dart';
 import '../features/prayer/presentation/screens/prayer_times_screen.dart';
-import '../features/quran/presentation/screens/quran_library_screen.dart';
+import '../features/prayer/presentation/screens/calculation_settings_screen.dart';
+import '../features/calendar/presentation/screens/hijri_calendar_screen.dart';
+import '../features/qibla/presentation/screens/qibla_screen.dart';
 import '../features/quran/presentation/screens/juz_selection_screen.dart';
 import '../features/quran/presentation/screens/quran_collection_reader_screen.dart';
+import '../features/quran/presentation/screens/quran_library_screen.dart';
 import '../features/quran/presentation/screens/quran_page_reader_screen.dart';
 import '../features/quran/presentation/screens/surah_reader_screen.dart';
-import '../features/qibla/presentation/screens/qibla_screen.dart';
 import '../features/settings/presentation/screens/settings_screen.dart';
 import '../l10n/generated/app_localizations.dart';
 
@@ -92,10 +94,23 @@ GoRouter createAppRouter() => GoRouter(
               path: '/settings',
               name: 'settings',
               builder: (context, state) => const SettingsScreen(),
+              routes: [
+                GoRoute(
+                  path: 'calculation',
+                  name: 'calculation-settings',
+                  builder: (context, state) =>
+                      const CalculationSettingsScreen(),
+                ),
+              ],
             ),
           ],
         ),
       ],
+    ),
+    GoRoute(
+      path: '/calendar',
+      name: 'hijri-calendar',
+      builder: (context, state) => const HijriCalendarScreen(),
     ),
     GoRoute(
       path: '/location',

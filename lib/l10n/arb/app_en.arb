@@ -15,18 +15,55 @@
   "quranSearchHint": "Search surah name or number",
   "clearSearch": "Clear search",
   "quranSurahCount": "{count} surahs",
-  "@quranSurahCount": {"placeholders": {"count": {"type": "int"}}},
+  "@quranSurahCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "quranNoResults": "No surahs match your search.",
   "quranAyahs": "ayahs",
   "quranReadingTitle": "Quran reading",
   "quranPage": "Page",
+  "quranPartNumber": "Part {number}",
+  "@quranPartNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "quranAyahNumber": "Ayah {number}",
+  "@quranAyahNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
   "quranBySurah": "Quran by Surah",
   "quranByJuz": "Quran by Juz",
   "quranFull": "Full Quran",
   "quranJuzNumber": "Juz {number}",
-  "@quranJuzNumber": {"placeholders": {"number": {"type": "int"}}},
+  "@quranJuzNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
   "quranPageCount": "Page {page} of {total}",
-  "@quranPageCount": {"placeholders": {"page": {"type": "int"}, "total": {"type": "int"}}},
+  "@quranPageCount": {
+    "placeholders": {
+      "page": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "previousPage": "Previous page",
   "nextPage": "Next page",
   "qiblaTitle": "Qibla",
@@ -34,12 +71,12 @@
   "qiblaLocationRequired": "Choose a location to calculate the direction to the Kaaba.",
   "qiblaBearing": "Bearing from north",
   "kaabaDistance": "Distance to Kaaba",
-  "compassUnavailable": "Compass signal unavailable. The arrow shows the bearing from north.",
+  "compassUnavailable": "Compass signal unavailable. The Kaaba marker shows the bearing from north.",
   "compassNorth": "N",
   "compassEast": "E",
   "compassSouth": "S",
   "compassWest": "W",
-  "compassAlignHint": "Turn your device until the arrow points to the top of the compass.",
+  "compassAlignHint": "Turn your device until the Kaaba marker is at the top of the compass.",
   "compassSearching": "Looking for a compass signal…",
   "compassCalibrationTitle": "Calibrate your compass",
   "compassCalibrationDescription": "Move your phone in a figure-eight a few times, then keep it away from magnets, metal objects, and electronic equipment. Nearby interference and local magnetic variation can affect compass readings.",
@@ -165,8 +202,20 @@
   "nextMonth": "Next month",
   "decreaseAdjustment": "Decrease {prayer} adjustment",
   "increaseAdjustment": "Increase {prayer} adjustment",
-  "@decreaseAdjustment": { "placeholders": { "prayer": { "type": "String" } } },
-  "@increaseAdjustment": { "placeholders": { "prayer": { "type": "String" } } },
+  "@decreaseAdjustment": {
+    "placeholders": {
+      "prayer": {
+        "type": "String"
+      }
+    }
+  },
+  "@increaseAdjustment": {
+    "placeholders": {
+      "prayer": {
+        "type": "String"
+      }
+    }
+  },
   "@monthDayCount": {
     "placeholders": {
       "count": {
@@ -193,5 +242,81 @@
   "methodTurkiye": "Türkiye (Diyanet)",
   "methodTehran": "Tehran",
   "methodNorthAmerica": "North America (ISNA)",
-  "methodMorocco": "Morocco"
+  "methodMorocco": "Morocco",
+  "quranTimeout": "The request took too long. Try again or download the Quran for offline reading.",
+  "quranFontSize": "Quran text size",
+  "jumpToAyah": "Go to ayah",
+  "jumpToPage": "Go to page",
+  "pageRange": "Page (1–604)",
+  "openPage": "Open page",
+  "bookmarkAyah": "Bookmark ayah",
+  "removeBookmark": "Remove bookmark",
+  "copyAyah": "Copy ayah",
+  "copied": "Ayah copied",
+  "showTranslation": "English translation",
+  "translationAttribution": "Saheeh International · AlQuran Cloud",
+  "playRecitation": "Play recitation",
+  "stopRecitation": "Stop recitation",
+  "recitationAttribution": "Mishary Alafasy · AlQuran Cloud · Internet required for audio",
+  "saveFailed": "Could not save your changes. Please try again.",
+  "quranDownload": "Download Arabic Quran",
+  "quranDownloadHint": "Keep all Arabic pages on this device for offline reading.",
+  "quranDownloaded": "Arabic Quran ready offline",
+  "quranDownloading": "Downloading Quran…",
+  "downloadFailed": "Download failed. Try again; saved content is still available.",
+  "continueReading": "Continue reading",
+  "bookmarks": "Bookmarks",
+  "noBookmarks": "Tap an ayah while reading to bookmark it.",
+  "language": "Language",
+  "languageSystem": "Device language",
+  "languageEnglish": "English",
+  "languageArabic": "العربية",
+  "setupTitle": "Set up your prayer times",
+  "setupDescription": "Choose your location, then check the calculation convention used by your local mosque.",
+  "setupLocation": "1. Choose your location",
+  "setupCalculation": "2. Review calculation settings",
+  "finishSetup": "Start using Salah",
+  "reviewSetup": "Review setup",
+  "sourceAladhan": "Source: AlAdhan",
+  "sourceLocal": "Source: on-device calculation",
+  "alertsDenied": "Notifications are disabled. Enable them in device settings, then retry.",
+  "alertsFailed": "Prayer reminders could not be updated. Try again.",
+  "alertsLocation": "Choose a location to schedule prayer reminders.",
+  "alertsOff": "No prayer reminders enabled.",
+  "alertsSchedule": "{count} reminders scheduled. Open Salah regularly to renew the next 12 days.",
+  "@alertsSchedule": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "alertsApproximate": "Android may delay reminders. Allow precise alarms for alerts at the calculated time.",
+  "allowExactAlerts": "Allow precise alarms",
+  "alertsPermissionDenied": "Notification permission was not granted.",
+  "alertsRollingNote": "Reminders use your selected city and calculation settings. Sound follows device settings. Schedules renew whenever you open Salah; full Azan audio is not included.",
+  "hijriCalendarTitle": "Islamic calendar",
+  "calendarMethodNote": "Umm al-Qura calendar · Works offline. Local moon-sighting dates and observances may differ.",
+  "calendarRange": "The calendar supports Hijri years 1356–1500.",
+  "chooseHijriMonth": "Choose month and year",
+  "calendarMonth": "Hijri month",
+  "calendarYear": "Hijri year",
+  "showCalendar": "Show month",
+  "calendarToday": "Today",
+  "calendarNumberLegend": "Large number: Hijri day · Small number: Gregorian day · Dot: Islamic occasion",
+  "monthOccasions": "Occasions this month",
+  "noMonthOccasions": "No listed occasions this month.",
+  "islamicNewYear": "Islamic New Year",
+  "dayOfAshura": "Day of Ashura",
+  "ramadanBegins": "Ramadan begins",
+  "eidAlFitr": "Eid al-Fitr",
+  "dayOfArafah": "Day of Arafah",
+  "eidAlAdha": "Eid al-Adha",
+  "daysOfTashriq": "Days of Tashriq",
+  "kaabaDirection": "Direction to the Kaaba",
+  "ayahOfTheDay": "Ayah of the Day",
+  "dailyAyahUnavailable": "Today’s ayah could not be loaded. Connect to the internet or download the Arabic Quran.",
+  "dailyTranslationUnavailable": "Translation unavailable · Try again",
+  "readThisSurah": "Read this Surah",
+  "hijriEra": "AH"
 }

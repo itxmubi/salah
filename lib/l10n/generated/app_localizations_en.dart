@@ -70,6 +70,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quranPage => 'Page';
 
   @override
+  String quranPartNumber(int number) {
+    return 'Part $number';
+  }
+
+  @override
+  String quranAyahNumber(int number) {
+    return 'Ayah $number';
+  }
+
+  @override
   String get quranBySurah => 'Quran by Surah';
 
   @override
@@ -113,7 +123,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get compassUnavailable =>
-      'Compass signal unavailable. The arrow shows the bearing from north.';
+      'Compass signal unavailable. The Kaaba marker shows the bearing from north.';
 
   @override
   String get compassNorth => 'N';
@@ -129,7 +139,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get compassAlignHint =>
-      'Turn your device until the arrow points to the top of the compass.';
+      'Turn your device until the Kaaba marker is at the top of the compass.';
 
   @override
   String get compassSearching => 'Looking for a compass signal…';
@@ -576,4 +586,228 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get methodMorocco => 'Morocco';
+
+  @override
+  String get quranTimeout =>
+      'The request took too long. Try again or download the Quran for offline reading.';
+
+  @override
+  String get quranFontSize => 'Quran text size';
+
+  @override
+  String get jumpToAyah => 'Go to ayah';
+
+  @override
+  String get jumpToPage => 'Go to page';
+
+  @override
+  String get pageRange => 'Page (1–604)';
+
+  @override
+  String get openPage => 'Open page';
+
+  @override
+  String get bookmarkAyah => 'Bookmark ayah';
+
+  @override
+  String get removeBookmark => 'Remove bookmark';
+
+  @override
+  String get copyAyah => 'Copy ayah';
+
+  @override
+  String get copied => 'Ayah copied';
+
+  @override
+  String get showTranslation => 'English translation';
+
+  @override
+  String get translationAttribution => 'Saheeh International · AlQuran Cloud';
+
+  @override
+  String get playRecitation => 'Play recitation';
+
+  @override
+  String get stopRecitation => 'Stop recitation';
+
+  @override
+  String get recitationAttribution =>
+      'Mishary Alafasy · AlQuran Cloud · Internet required for audio';
+
+  @override
+  String get saveFailed => 'Could not save your changes. Please try again.';
+
+  @override
+  String get quranDownload => 'Download Arabic Quran';
+
+  @override
+  String get quranDownloadHint =>
+      'Keep all Arabic pages on this device for offline reading.';
+
+  @override
+  String get quranDownloaded => 'Arabic Quran ready offline';
+
+  @override
+  String get quranDownloading => 'Downloading Quran…';
+
+  @override
+  String get downloadFailed =>
+      'Download failed. Try again; saved content is still available.';
+
+  @override
+  String get continueReading => 'Continue reading';
+
+  @override
+  String get bookmarks => 'Bookmarks';
+
+  @override
+  String get noBookmarks => 'Tap an ayah while reading to bookmark it.';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get languageSystem => 'Device language';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get languageArabic => 'العربية';
+
+  @override
+  String get setupTitle => 'Set up your prayer times';
+
+  @override
+  String get setupDescription =>
+      'Choose your location, then check the calculation convention used by your local mosque.';
+
+  @override
+  String get setupLocation => '1. Choose your location';
+
+  @override
+  String get setupCalculation => '2. Review calculation settings';
+
+  @override
+  String get finishSetup => 'Start using Salah';
+
+  @override
+  String get reviewSetup => 'Review setup';
+
+  @override
+  String get sourceAladhan => 'Source: AlAdhan';
+
+  @override
+  String get sourceLocal => 'Source: on-device calculation';
+
+  @override
+  String get alertsDenied =>
+      'Notifications are disabled. Enable them in device settings, then retry.';
+
+  @override
+  String get alertsFailed =>
+      'Prayer reminders could not be updated. Try again.';
+
+  @override
+  String get alertsLocation =>
+      'Choose a location to schedule prayer reminders.';
+
+  @override
+  String get alertsOff => 'No prayer reminders enabled.';
+
+  @override
+  String alertsSchedule(int count) {
+    return '$count reminders scheduled. Open Salah regularly to renew the next 12 days.';
+  }
+
+  @override
+  String get alertsApproximate =>
+      'Android may delay reminders. Allow precise alarms for alerts at the calculated time.';
+
+  @override
+  String get allowExactAlerts => 'Allow precise alarms';
+
+  @override
+  String get alertsPermissionDenied =>
+      'Notification permission was not granted.';
+
+  @override
+  String get alertsRollingNote =>
+      'Reminders use your selected city and calculation settings. Sound follows device settings. Schedules renew whenever you open Salah; full Azan audio is not included.';
+
+  @override
+  String get hijriCalendarTitle => 'Islamic calendar';
+
+  @override
+  String get calendarMethodNote =>
+      'Umm al-Qura calendar · Works offline. Local moon-sighting dates and observances may differ.';
+
+  @override
+  String get calendarRange => 'The calendar supports Hijri years 1356–1500.';
+
+  @override
+  String get chooseHijriMonth => 'Choose month and year';
+
+  @override
+  String get calendarMonth => 'Hijri month';
+
+  @override
+  String get calendarYear => 'Hijri year';
+
+  @override
+  String get showCalendar => 'Show month';
+
+  @override
+  String get calendarToday => 'Today';
+
+  @override
+  String get calendarNumberLegend =>
+      'Large number: Hijri day · Small number: Gregorian day · Dot: Islamic occasion';
+
+  @override
+  String get monthOccasions => 'Occasions this month';
+
+  @override
+  String get noMonthOccasions => 'No listed occasions this month.';
+
+  @override
+  String get islamicNewYear => 'Islamic New Year';
+
+  @override
+  String get dayOfAshura => 'Day of Ashura';
+
+  @override
+  String get ramadanBegins => 'Ramadan begins';
+
+  @override
+  String get eidAlFitr => 'Eid al-Fitr';
+
+  @override
+  String get dayOfArafah => 'Day of Arafah';
+
+  @override
+  String get eidAlAdha => 'Eid al-Adha';
+
+  @override
+  String get daysOfTashriq => 'Days of Tashriq';
+
+  @override
+  String get kaabaDirection => 'Direction to the Kaaba';
+
+  @override
+  String get ayahOfTheDay => 'Ayah of the Day';
+
+  @override
+  String get dailyAyahUnavailable =>
+      'Today’s ayah could not be loaded. Connect to the internet or download the Arabic Quran.';
+
+  @override
+  String get dailyTranslationUnavailable =>
+      'Translation unavailable · Try again';
+
+  @override
+  String get readThisSurah => 'Read this Surah';
+
+  @override
+  String get hijriEra => 'AH';
 }

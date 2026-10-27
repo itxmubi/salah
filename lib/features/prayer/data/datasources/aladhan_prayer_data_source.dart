@@ -65,7 +65,7 @@ class AladhanPrayerDataSource {
     final path = _calendarPath(location, date);
     final query = _query(location, settings, fallbackTimezone);
     final response = await _get(path, query);
-    final rawDays = response['data'];
+    final rawDays = response;
     if (rawDays is! List) throw const _AladhanException();
     final schedules = <PrayerSchedule>[];
     for (var index = 0; index < rawDays.length; index++) {
@@ -76,7 +76,9 @@ class AladhanPrayerDataSource {
         _scheduleFromData(item, location, settings, itemDate, fallbackTimezone),
       );
     }
-    if (schedules.isEmpty) throw const _AladhanException();
+    if (schedules.length != DateTime(month.year, month.month + 1, 0).day) {
+      throw const _AladhanException();
+    }
     return schedules;
   }
 
@@ -144,10 +146,7 @@ class AladhanPrayerDataSource {
     if (location.latitude.abs() >= 48) 'latitudeAdjustmentMethod': '3',
   };
 
-  Future<Map<String, dynamic>> _get(
-    String path,
-    Map<String, String> query,
-  ) async {
+  Future<dynamic> _get(String path, Map<String, String> query) async {
     final base = Uri.parse(baseUrl);
     final uri = Uri.https(base.authority, '${base.path}$path', query);
     try {
@@ -162,7 +161,9 @@ class AladhanPrayerDataSource {
         throw const _AladhanException();
       }
       final data = decoded['data'];
-      if (data is! Map<String, dynamic>) throw const _AladhanException();
+      if (data is! Map<String, dynamic> && data is! List) {
+        throw const _AladhanException();
+      }
       return data;
     } on _AladhanException {
       rethrow;
@@ -240,6 +241,7 @@ class AladhanPrayerDataSource {
       localDate: DateTime.utc(date.year, date.month, date.day),
       timeZoneId: zoneName,
       events: events,
+      source: PrayerScheduleSource.aladhan,
     );
   }
 }

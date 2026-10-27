@@ -11,13 +11,15 @@ class AppLoadingState extends StatelessWidget {
   Widget build(BuildContext context) => Semantics(
     liveRegion: true,
     label: label,
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const CircularProgressIndicator(),
-        const SizedBox(height: AppSpacing.md),
-        Text(label, style: Theme.of(context).textTheme.bodyMedium),
-      ],
+    child: SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const CircularProgressIndicator(),
+          const SizedBox(height: AppSpacing.md),
+          Text(label, style: Theme.of(context).textTheme.bodyMedium),
+        ],
+      ),
     ),
   );
 }

@@ -14,7 +14,9 @@ class HijriCalendarRepositoryImpl implements HijriCalendarRepository {
     try {
       return Success(await _dataSource.convertGregorianDate(gregorianDate));
     } catch (_) {
-      return const Error(NetworkFailure());
+      return const Error(
+        UnknownFailure('Date outside the supported Hijri calendar range.'),
+      );
     }
   }
 }

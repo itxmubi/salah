@@ -86,13 +86,8 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen>
         title: Text(localization.prayerTimesTitle),
         actions: [
           IconButton(
-            tooltip: localization.openLocation,
-            onPressed: () => context.push('/location'),
-            icon: const Icon(AppIcons.location),
-          ),
-          IconButton(
             tooltip: localization.prayerSettings,
-            onPressed: () => _openSettings(context, prayerAsync.asData?.value),
+            onPressed: () => context.push('/settings/calculation'),
             icon: const Icon(AppIcons.tune),
           ),
           const SizedBox(width: AppSpacing.xs),
@@ -110,8 +105,17 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen>
             onRetry: _refresh,
           ),
           data: (state) {
-            if (state.overview == null)
+            if (state.overview == null) {
+              if (state.issue != null) {
+                return AppErrorState(
+                  title: localization.prayerTimesTitle,
+                  description: localization.prayerCalculationError,
+                  retryLabel: localization.retry,
+                  onRetry: _refresh,
+                );
+              }
               return _noLocation(context, localization);
+            }
             if (_showMonth &&
                 !_initialMonthRequested &&
                 state.monthSchedules.isEmpty &&
@@ -166,6 +170,12 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen>
             ),
             children: [
               _LocationHeading(schedule: schedule, localization: localization),
+              Text(
+                schedule.source == PrayerScheduleSource.aladhan
+                    ? localization.sourceAladhan
+                    : localization.sourceLocal,
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
               const SizedBox(height: AppSpacing.md),
               if (state.issue case final issue?)
                 Padding(
@@ -326,27 +336,15 @@ class _PrayerTimesScreenState extends ConsumerState<PrayerTimesScreen>
     );
   }
 
-  Future<void> _openSettings(BuildContext context, PrayerState? state) async {
-    if (state == null) return;
-    await showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (context) => _PrayerSettingsSheet(
-        settings: state.settings,
-        onChanged: (settings) => ref
-            .read(prayerControllerProvider.notifier)
-            .updateSettings(settings),
-      ),
-    );
-  }
-
   String _formatTime(PrayerEvent event, PrayerSettings settings) {
     final dateTime = DateTime(2024, 1, 1, event.localHour, event.localMinute);
     return settings.use24HourFormat
-        ? DateFormat.Hm().format(dateTime)
-        : DateFormat.jm().format(dateTime);
+        ? DateFormat.Hm(
+            AppLocalizations.of(context).localeName,
+          ).format(dateTime)
+        : DateFormat.jm(
+            AppLocalizations.of(context).localeName,
+          ).format(dateTime);
   }
 }
 
@@ -357,31 +355,19 @@ class _LocationHeading extends StatelessWidget {
   final AppLocalizations localization;
 
   @override
-  Widget build(BuildContext context) => Row(
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      CircleAvatar(
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
-        child: const Icon(AppIcons.location),
+      Text(
+        schedule.locationName.isEmpty
+            ? localization.currentLocation
+            : schedule.locationName,
+        style: Theme.of(context).textTheme.titleMedium,
       ),
-      const SizedBox(width: AppSpacing.sm),
-      Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              schedule.locationName.isEmpty
-                  ? localization.currentLocation
-                  : schedule.locationName,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            Text(
-              schedule.timeZoneId,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-            ),
-          ],
+      Text(
+        schedule.timeZoneId,
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
       ),
     ],
@@ -712,8 +698,12 @@ class _SunTime extends StatelessWidget {
   Widget build(BuildContext context) {
     final localTime = DateTime(2024, 1, 1, event.localHour, event.localMinute);
     final formatted = settings.use24HourFormat
-        ? DateFormat.Hm().format(localTime)
-        : DateFormat.jm().format(localTime);
+        ? DateFormat.Hm(
+            AppLocalizations.of(context).localeName,
+          ).format(localTime)
+        : DateFormat.jm(
+            AppLocalizations.of(context).localeName,
+          ).format(localTime);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
       child: Row(
@@ -835,8 +825,8 @@ class _MonthTimeChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final clock = DateTime(2024, 1, 1, event.localHour, event.localMinute);
     final time = settings.use24HourFormat
-        ? DateFormat.Hm().format(clock)
-        : DateFormat.jm().format(clock);
+        ? DateFormat.Hm(AppLocalizations.of(context).localeName).format(clock)
+        : DateFormat.jm(AppLocalizations.of(context).localeName).format(clock);
     return Container(
       constraints: const BoxConstraints(minWidth: 68),
       padding: const EdgeInsets.symmetric(
@@ -858,14 +848,21 @@ class _MonthTimeChip extends StatelessWidget {
   }
 }
 
-class _PrayerSettingsSheet extends StatelessWidget {
-  const _PrayerSettingsSheet({required this.settings, required this.onChanged});
+class PrayerSettingsSheet extends ConsumerWidget {
+  const PrayerSettingsSheet({
+    required this.settings,
+    required this.onChanged,
+    super.key,
+  });
 
   final PrayerSettings settings;
   final ValueChanged<PrayerSettings> onChanged;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final settings =
+        ref.watch(prayerControllerProvider).asData?.value.settings ??
+        this.settings;
     final localization = AppLocalizations.of(context);
     final labels = _PrayerLabels(localization);
     return Padding(

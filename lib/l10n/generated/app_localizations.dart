@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_ar.dart';
 import 'app_localizations_en.dart';
 
 // ignore_for_file: type=lint
@@ -92,7 +93,10 @@ abstract class AppLocalizations {
       ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('ar'),
+    Locale('en'),
+  ];
 
   /// No description provided for @appTitle.
   ///
@@ -208,6 +212,18 @@ abstract class AppLocalizations {
   /// **'Page'**
   String get quranPage;
 
+  /// No description provided for @quranPartNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Part {number}'**
+  String quranPartNumber(int number);
+
+  /// No description provided for @quranAyahNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Ayah {number}'**
+  String quranAyahNumber(int number);
+
   /// No description provided for @quranBySurah.
   ///
   /// In en, this message translates to:
@@ -283,7 +299,7 @@ abstract class AppLocalizations {
   /// No description provided for @compassUnavailable.
   ///
   /// In en, this message translates to:
-  /// **'Compass signal unavailable. The arrow shows the bearing from north.'**
+  /// **'Compass signal unavailable. The Kaaba marker shows the bearing from north.'**
   String get compassUnavailable;
 
   /// No description provided for @compassNorth.
@@ -313,7 +329,7 @@ abstract class AppLocalizations {
   /// No description provided for @compassAlignHint.
   ///
   /// In en, this message translates to:
-  /// **'Turn your device until the arrow points to the top of the compass.'**
+  /// **'Turn your device until the Kaaba marker is at the top of the compass.'**
   String get compassAlignHint;
 
   /// No description provided for @compassSearching.
@@ -1143,6 +1159,420 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Morocco'**
   String get methodMorocco;
+
+  /// No description provided for @quranTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'The request took too long. Try again or download the Quran for offline reading.'**
+  String get quranTimeout;
+
+  /// No description provided for @quranFontSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Quran text size'**
+  String get quranFontSize;
+
+  /// No description provided for @jumpToAyah.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to ayah'**
+  String get jumpToAyah;
+
+  /// No description provided for @jumpToPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to page'**
+  String get jumpToPage;
+
+  /// No description provided for @pageRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Page (1–604)'**
+  String get pageRange;
+
+  /// No description provided for @openPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Open page'**
+  String get openPage;
+
+  /// No description provided for @bookmarkAyah.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookmark ayah'**
+  String get bookmarkAyah;
+
+  /// No description provided for @removeBookmark.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove bookmark'**
+  String get removeBookmark;
+
+  /// No description provided for @copyAyah.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy ayah'**
+  String get copyAyah;
+
+  /// No description provided for @copied.
+  ///
+  /// In en, this message translates to:
+  /// **'Ayah copied'**
+  String get copied;
+
+  /// No description provided for @showTranslation.
+  ///
+  /// In en, this message translates to:
+  /// **'English translation'**
+  String get showTranslation;
+
+  /// No description provided for @translationAttribution.
+  ///
+  /// In en, this message translates to:
+  /// **'Saheeh International · AlQuran Cloud'**
+  String get translationAttribution;
+
+  /// No description provided for @playRecitation.
+  ///
+  /// In en, this message translates to:
+  /// **'Play recitation'**
+  String get playRecitation;
+
+  /// No description provided for @stopRecitation.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop recitation'**
+  String get stopRecitation;
+
+  /// No description provided for @recitationAttribution.
+  ///
+  /// In en, this message translates to:
+  /// **'Mishary Alafasy · AlQuran Cloud · Internet required for audio'**
+  String get recitationAttribution;
+
+  /// No description provided for @saveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save your changes. Please try again.'**
+  String get saveFailed;
+
+  /// No description provided for @quranDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Download Arabic Quran'**
+  String get quranDownload;
+
+  /// No description provided for @quranDownloadHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep all Arabic pages on this device for offline reading.'**
+  String get quranDownloadHint;
+
+  /// No description provided for @quranDownloaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic Quran ready offline'**
+  String get quranDownloaded;
+
+  /// No description provided for @quranDownloading.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading Quran…'**
+  String get quranDownloading;
+
+  /// No description provided for @downloadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Download failed. Try again; saved content is still available.'**
+  String get downloadFailed;
+
+  /// No description provided for @continueReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue reading'**
+  String get continueReading;
+
+  /// No description provided for @bookmarks.
+  ///
+  /// In en, this message translates to:
+  /// **'Bookmarks'**
+  String get bookmarks;
+
+  /// No description provided for @noBookmarks.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap an ayah while reading to bookmark it.'**
+  String get noBookmarks;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @languageSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'Device language'**
+  String get languageSystem;
+
+  /// No description provided for @languageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
+
+  /// No description provided for @languageArabic.
+  ///
+  /// In en, this message translates to:
+  /// **'العربية'**
+  String get languageArabic;
+
+  /// No description provided for @setupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up your prayer times'**
+  String get setupTitle;
+
+  /// No description provided for @setupDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your location, then check the calculation convention used by your local mosque.'**
+  String get setupDescription;
+
+  /// No description provided for @setupLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Choose your location'**
+  String get setupLocation;
+
+  /// No description provided for @setupCalculation.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Review calculation settings'**
+  String get setupCalculation;
+
+  /// No description provided for @finishSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Start using Salah'**
+  String get finishSetup;
+
+  /// No description provided for @reviewSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Review setup'**
+  String get reviewSetup;
+
+  /// No description provided for @sourceAladhan.
+  ///
+  /// In en, this message translates to:
+  /// **'Source: AlAdhan'**
+  String get sourceAladhan;
+
+  /// No description provided for @sourceLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'Source: on-device calculation'**
+  String get sourceLocal;
+
+  /// No description provided for @alertsDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are disabled. Enable them in device settings, then retry.'**
+  String get alertsDenied;
+
+  /// No description provided for @alertsFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer reminders could not be updated. Try again.'**
+  String get alertsFailed;
+
+  /// No description provided for @alertsLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a location to schedule prayer reminders.'**
+  String get alertsLocation;
+
+  /// No description provided for @alertsOff.
+  ///
+  /// In en, this message translates to:
+  /// **'No prayer reminders enabled.'**
+  String get alertsOff;
+
+  /// No description provided for @alertsSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} reminders scheduled. Open Salah regularly to renew the next 12 days.'**
+  String alertsSchedule(int count);
+
+  /// No description provided for @alertsApproximate.
+  ///
+  /// In en, this message translates to:
+  /// **'Android may delay reminders. Allow precise alarms for alerts at the calculated time.'**
+  String get alertsApproximate;
+
+  /// No description provided for @allowExactAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow precise alarms'**
+  String get allowExactAlerts;
+
+  /// No description provided for @alertsPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification permission was not granted.'**
+  String get alertsPermissionDenied;
+
+  /// No description provided for @alertsRollingNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders use your selected city and calculation settings. Sound follows device settings. Schedules renew whenever you open Salah; full Azan audio is not included.'**
+  String get alertsRollingNote;
+
+  /// No description provided for @hijriCalendarTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Islamic calendar'**
+  String get hijriCalendarTitle;
+
+  /// No description provided for @calendarMethodNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Umm al-Qura calendar · Works offline. Local moon-sighting dates and observances may differ.'**
+  String get calendarMethodNote;
+
+  /// No description provided for @calendarRange.
+  ///
+  /// In en, this message translates to:
+  /// **'The calendar supports Hijri years 1356–1500.'**
+  String get calendarRange;
+
+  /// No description provided for @chooseHijriMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose month and year'**
+  String get chooseHijriMonth;
+
+  /// No description provided for @calendarMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Hijri month'**
+  String get calendarMonth;
+
+  /// No description provided for @calendarYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Hijri year'**
+  String get calendarYear;
+
+  /// No description provided for @showCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Show month'**
+  String get showCalendar;
+
+  /// No description provided for @calendarToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get calendarToday;
+
+  /// No description provided for @calendarNumberLegend.
+  ///
+  /// In en, this message translates to:
+  /// **'Large number: Hijri day · Small number: Gregorian day · Dot: Islamic occasion'**
+  String get calendarNumberLegend;
+
+  /// No description provided for @monthOccasions.
+  ///
+  /// In en, this message translates to:
+  /// **'Occasions this month'**
+  String get monthOccasions;
+
+  /// No description provided for @noMonthOccasions.
+  ///
+  /// In en, this message translates to:
+  /// **'No listed occasions this month.'**
+  String get noMonthOccasions;
+
+  /// No description provided for @islamicNewYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Islamic New Year'**
+  String get islamicNewYear;
+
+  /// No description provided for @dayOfAshura.
+  ///
+  /// In en, this message translates to:
+  /// **'Day of Ashura'**
+  String get dayOfAshura;
+
+  /// No description provided for @ramadanBegins.
+  ///
+  /// In en, this message translates to:
+  /// **'Ramadan begins'**
+  String get ramadanBegins;
+
+  /// No description provided for @eidAlFitr.
+  ///
+  /// In en, this message translates to:
+  /// **'Eid al-Fitr'**
+  String get eidAlFitr;
+
+  /// No description provided for @dayOfArafah.
+  ///
+  /// In en, this message translates to:
+  /// **'Day of Arafah'**
+  String get dayOfArafah;
+
+  /// No description provided for @eidAlAdha.
+  ///
+  /// In en, this message translates to:
+  /// **'Eid al-Adha'**
+  String get eidAlAdha;
+
+  /// No description provided for @daysOfTashriq.
+  ///
+  /// In en, this message translates to:
+  /// **'Days of Tashriq'**
+  String get daysOfTashriq;
+
+  /// No description provided for @kaabaDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Direction to the Kaaba'**
+  String get kaabaDirection;
+
+  /// No description provided for @ayahOfTheDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Ayah of the Day'**
+  String get ayahOfTheDay;
+
+  /// No description provided for @dailyAyahUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Today’s ayah could not be loaded. Connect to the internet or download the Arabic Quran.'**
+  String get dailyAyahUnavailable;
+
+  /// No description provided for @dailyTranslationUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Translation unavailable · Try again'**
+  String get dailyTranslationUnavailable;
+
+  /// No description provided for @readThisSurah.
+  ///
+  /// In en, this message translates to:
+  /// **'Read this Surah'**
+  String get readThisSurah;
+
+  /// No description provided for @hijriEra.
+  ///
+  /// In en, this message translates to:
+  /// **'AH'**
+  String get hijriEra;
 }
 
 class _AppLocalizationsDelegate
@@ -1156,7 +1586,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en'].contains(locale.languageCode);
+      <String>['ar', 'en'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -1165,6 +1595,8 @@ class _AppLocalizationsDelegate
 AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'ar':
+      return AppLocalizationsAr();
     case 'en':
       return AppLocalizationsEn();
   }

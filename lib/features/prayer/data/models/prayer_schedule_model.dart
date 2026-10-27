@@ -5,11 +5,14 @@ class PrayerScheduleModel {
   const PrayerScheduleModel._();
 
   static PrayerSchedule fromJson(Map<String, Object?> json) => PrayerSchedule(
+    source: json['source'] == 'local'
+        ? PrayerScheduleSource.local
+        : PrayerScheduleSource.aladhan,
     locationId: json['locationId']! as String,
     locationName: json['locationName']! as String,
     latitude: (json['latitude']! as num).toDouble(),
     longitude: (json['longitude']! as num).toDouble(),
-    localDate: DateTime.parse(json['localDate']! as String),
+    localDate: _parseDate(json['localDate']! as String),
     timeZoneId: json['timeZoneId']! as String,
     events: (json['events']! as List<Object?>)
         .map((item) {
@@ -28,6 +31,7 @@ class PrayerScheduleModel {
   );
 
   static Map<String, Object?> toJson(PrayerSchedule schedule) => {
+    'source': schedule.source.name,
     'locationId': schedule.locationId,
     'locationName': schedule.locationName,
     'latitude': schedule.latitude,
@@ -44,6 +48,11 @@ class PrayerScheduleModel {
         },
     ],
   };
+
+  static DateTime _parseDate(String text) {
+    final date = DateTime.parse(text);
+    return DateTime.utc(date.year, date.month, date.day);
+  }
 
   static String _dateKey(DateTime date) {
     final year = date.year.toString().padLeft(4, '0');

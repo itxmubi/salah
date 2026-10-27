@@ -17,6 +17,8 @@ class PrayerEvent {
       prayer != PrayerName.sunrise && prayer != PrayerName.sunset;
 }
 
+enum PrayerScheduleSource { aladhan, local }
+
 class PrayerSchedule {
   const PrayerSchedule({
     required this.locationId,
@@ -26,6 +28,7 @@ class PrayerSchedule {
     required this.localDate,
     required this.timeZoneId,
     required this.events,
+    this.source = PrayerScheduleSource.local,
   });
 
   final String locationId;
@@ -35,6 +38,7 @@ class PrayerSchedule {
   final DateTime localDate;
   final String timeZoneId;
   final List<PrayerEvent> events;
+  final PrayerScheduleSource source;
 
   PrayerEvent event(PrayerName prayer) =>
       events.firstWhere((event) => event.prayer == prayer);
